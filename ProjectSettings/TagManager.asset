@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - TextPool
+  - bullets
+  - enemies
+  - Button
+  - Arena
+  - Bounce
+  - MainButton
+  - ChargedBullet
+  - EnemyBullet
+  - shootingEnemy
+  - health
+  - Spikes
+  - HomingBullet
+  - SmallEnemy
+  - SpinningSword
+  - Shield_Bounce
+  - BulletBounced
+  - BigEnemy
+  - BigPiercingBullet
+  - Speedster
+  - Sniper
+  - EnemyBulletSniper
+  - BoxingGlove
+  - Magnet
+  - StabbingSpike
+  - Particles
+  - Indicator
+  - SawBlade
+  - Hammer
+  - HammerParticles
+  - Arrow
+  - Gun3Bullet
+  - CrossbowArrow
+  - arrowPool
+  - TrippleBullet
+  - KnifePool
+  - Knife
+  - PointsParent
+  - Boss
+  - SmallBossBullet
+  - SmallShield
+  - EnemyBulletsParent
+  - BossBigShield
+  - PointColl
+  - Titan
+  - HeavyShot
+  - RagingGunner
+  - EnemyBulletHeavyShot
+  - RagingGunnerShot
+  - SharpshooterColl
+  - SmallShields
+  - RandomParent
+  - Champion
+  - DangerButtonBullets
+  - BigHeart
+  - DamageText
+  - PointText
+  - ParticleDamaged
+  - Skulls
+  - IndicatorObject
+  - TitanPieces
+  - RangedPieces
+  - BrutePieces
+  - SmallPieces
+  - HeavyshotPieces
+  - EnemySawBlade
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Bullets
+  - Enemy
+  - Arena
+  - Pierce
+  - EnemyBullet
+  - Button
+  - ParentButton
+  - Shield_Bounce
+  - ShootingEnemy
+  - Skulls
+  - BossArenaBounce
+  - BossArenaTransparent
+  - BossShieldBounce
+  - PongArena
+  - PointCollider
+  - OtherCollisions
+  - ChampionArena
+  - DangerButton
+  - Champion3SawBlade
+  - ShootingColl
+  - BoxingGlove
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
