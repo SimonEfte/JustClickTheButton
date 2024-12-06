@@ -865,7 +865,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             if(isInDeathScreen == false)
             {
-                aimCursor.SetActive(false);
+                if (MobileScript.isMobile == false) { aimCursor.SetActive(true); }
                 Cursor.visible = true;
                 SetEnemyPoints(1);
                 if (ButtonClick.level == levelToFirstEnding) { abilititesTotalWaitTime = 1.6f; }
@@ -9166,7 +9166,10 @@ public class Choises : MonoBehaviour, IDataPersistence
     public void UnPauseGame()
     {
         isInLevelUpScreen = false;
-        if (firstControlledGun == true) { aimCursor.SetActive(true); }
+        if (firstControlledGun == true) 
+        { 
+            if(MobileScript.isMobile == false) { aimCursor.SetActive(true); }
+        }
         rerollButtonObject.SetActive(false);
         StartCoroutine(StartTimeScale());
         rerollButton.SetActive(false);

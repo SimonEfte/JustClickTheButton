@@ -20,8 +20,12 @@ public class SetCursors : MonoBehaviour
             if(Choises.isInMainManu == false && SettingsOptions.isInSettings == false && Choises.isInDeathScreen == false && Choises.firstControlledGun == true && Choises.isPaused == false)
             {
                 if(Cursor.visible == true) { Cursor.visible = false;  }
-                aimCursor.SetActive(true);
-                aimCursor.transform.position = Input.mousePosition;
+
+                if(MobileScript.isMobile == false)
+                {
+                    aimCursor.SetActive(true);
+                    aimCursor.transform.position = Input.mousePosition;
+                }
             }
             else
             {

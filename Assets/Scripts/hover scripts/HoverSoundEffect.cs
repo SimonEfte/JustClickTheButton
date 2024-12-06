@@ -10,12 +10,14 @@ public class HoverSoundEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void Awake()
     {
+        if (MobileScript.isMobile == true) { return; }
         soundManager = GameObject.Find("Audio");
         audioManager = soundManager.GetComponent<AudioManager>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (MobileScript.isMobile == true) { return; }
         audioManager.Play("hoverOther");
     }
 

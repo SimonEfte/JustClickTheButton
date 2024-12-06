@@ -8,12 +8,14 @@ public class HoverClickable : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(MobileScript.isMobile == true) { return; }
         SetCursors.hoveringClickableStuff = true;
         Cursor.visible = false;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (MobileScript.isMobile == true) { return; }
         SetCursors.hoveringClickableStuff = false;
         Cursor.visible = true;
     }

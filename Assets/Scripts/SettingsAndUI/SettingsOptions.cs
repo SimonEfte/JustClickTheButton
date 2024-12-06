@@ -370,6 +370,10 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
 
         UpdateTimerText();
         
+        if(MobileScript.isMobile == true)
+        {
+            pressedOkFirstTImePlaying = true;
+        }
 
         triggerResolution = false;
         if(pressedOkFirstTImePlaying == false)
@@ -758,6 +762,8 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     #endregion
 
     #region ContinueRun
+    public static bool isMobileSettingBTN;
+
     public void ContinueRun()
     {
         audioManager.Play("CircleTranIn");
@@ -849,6 +855,12 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     {
         mainCamera.GetComponent<Animator>().enabled = false;
         zoomScipt.SetHordeCamera();
+
+        if (MobileScript.isMobile == true)
+        {
+            mobileSettingsBTN.SetActive(true);
+            isMobileSettingBTN = true;
+        }
     }
 
     public GameObject wouldYouLikeToReset;
@@ -1009,6 +1021,8 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
 
     public GameObject PointPerClickEgg, IdleClicksEgg, CritClicksEgg, DefenseEgg, BigHeartEgg, SmallShieldEgg, BouncyShieldEgg, PistoEgg, UZIEgg, ShotgunEgg, AWPEgg, DeagleEgg, CannonEgg, MP4Egg, CrossbowEgg, ArenaEgg, BoxingGloveEgg, StabbySpikesEgg, TinySpikedEgg, KnifeEgg, SwordEgg, RitualEgg, SawBladeEgg, HammerEgg, ArrowEgg, ChargedBulletEgg, PointDropEgg, StopTimeEgg, InvincibilityEgg, SkullHarvestEgg, DiceEgg;
 
+    public GameObject mobileSettingsBTN;
+
     #region Update
     void Update()
     {
@@ -1113,81 +1127,30 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
             isInStats = false;
         }
 
+        if(MobileScript.isMobile == true)
+        {
+            if(Choises.isInMainManu == true) { isMobileSettingBTN = false; }
+
+            if (Choises.isInFirstWeaponScreen == true || Choises.isInChooseEndingScreen == true || Choises.isInWinScreen == true || Choises.isInDeathScreen == true || Choises.isEndingTransition == true || Choises.isInEggScreen == true)
+            {
+                mobileSettingsBTN.SetActive(false);
+            }
+            else 
+            { 
+                if (isMobileSettingBTN == true)
+                {
+                    mobileSettingsBTN.SetActive(true);
+                }
+                else { mobileSettingsBTN.SetActive(false); }
+            }
+        }
+
         #region Pause and unpause
         if (Choises.isInFirstWeaponScreen == false && Choises.isInChooseEndingScreen == false && Choises.isInWinScreen == false && Choises.isInDeathScreen == false && Choises.isEndingTransition == false)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                //Debug.Log("Pause");
-                if (ButtonBehiavor.chargeSoundPlaying == true)
-                {
-                    ButtonBehiavor.chargeSoundPlaying = false;
-                    audioManager.Stop("charge1");
-                }
-
-                if (MainButtonCollider.isRocketSound == true)
-                {
-                    audioManager.Stop("rocket");
-                    MainButtonCollider.isRocketSound = false;
-                }
-
-                if (MainButtonCollider.isChargeSound == true)
-                {
-                    audioManager.Stop("charge2");
-                    MainButtonCollider.isChargeSound = false;
-                }
-
-
-                audioManager.Play("UI_Click2");
-                if (settingsPopUp.activeInHierarchy == false)
-                {
-                    if (Choises.isInChooseEndingScreen == false && ButtonClick.level > 74 && BossMechanics.fightingBossFight == false && MimicEnding.isPlayingChamptions == false && DangerButtonEnding.isPlayingDangerButton == false && HordeEnding.playingHordeEnding == false)
-                    {
-                        endingSettingButton.SetActive(true);
-                        if (firstTimeDefeatedBoss == true) { ending1CheckMark.SetActive(true); }
-                        else { ending1CheckMark.SetActive(false); }
-
-                        if (firstTimeDefeatedHorde == true) { ending2CheckMark.SetActive(true); }
-                        else { ending2CheckMark.SetActive(false); }
-
-                        if (firstTimeDefeatedChampions == true) { ending3CheckMark.SetActive(true); }
-                        else { ending3CheckMark.SetActive(false); }
-
-                        if (firstTimeDefeatedDangerButton == true) { ending4CheckMark.SetActive(true); }
-                        else { ending4CheckMark.SetActive(false); }
-
-                        endingFrameEndingsCompleted.text = endingsCompleted + "/4";
-                    }
-                    else
-                    {
-                        endingSettingButton.SetActive(false);
-                    }
-
-                    Cursor.visible = true;
-                    isInSettings = true;
-                    Time.timeScale = 0;
-                    settingsPopUp.SetActive(true);
-                    achTooltip.SetActive(false);
-                    skinToolTip.SetActive(false);
-                    abilityToolTip.SetActive(false);
-                    currentRunToolTip.SetActive(false);
-                }
-                else
-                {
-                    SetCursors.hoveringClickableStuff = false;
-
-                    isInSettings = false;
-                    //Debug.Log(isInSettings);
-                    if (Choises.isPaused == false)
-                    {
-                        if (ButtonClick.isStopTimeAbilityActive == false) { Time.timeScale = 1; }
-                    }
-                    settingsPopUp.SetActive(false);
-                    if (wouldYouLikeToReset.activeInHierarchy == true)
-                    {
-                        wouldYouLikeToReset.SetActive(false);
-                    }
-                }
+                SettingsMechanics();
             }
         }
         #endregion
@@ -1504,7 +1467,82 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     }
 
     public GameObject blockPlayEnding;
+    #endregion
 
+    #region Settings mechaincs
+    public void SettingsMechanics()
+    {
+        //Debug.Log("Pause");
+        if (ButtonBehiavor.chargeSoundPlaying == true)
+        {
+            ButtonBehiavor.chargeSoundPlaying = false;
+            audioManager.Stop("charge1");
+        }
+
+        if (MainButtonCollider.isRocketSound == true)
+        {
+            audioManager.Stop("rocket");
+            MainButtonCollider.isRocketSound = false;
+        }
+
+        if (MainButtonCollider.isChargeSound == true)
+        {
+            audioManager.Stop("charge2");
+            MainButtonCollider.isChargeSound = false;
+        }
+
+
+        audioManager.Play("UI_Click2");
+        if (settingsPopUp.activeInHierarchy == false)
+        {
+            if (Choises.isInChooseEndingScreen == false && ButtonClick.level > 74 && BossMechanics.fightingBossFight == false && MimicEnding.isPlayingChamptions == false && DangerButtonEnding.isPlayingDangerButton == false && HordeEnding.playingHordeEnding == false)
+            {
+                endingSettingButton.SetActive(true);
+                if (firstTimeDefeatedBoss == true) { ending1CheckMark.SetActive(true); }
+                else { ending1CheckMark.SetActive(false); }
+
+                if (firstTimeDefeatedHorde == true) { ending2CheckMark.SetActive(true); }
+                else { ending2CheckMark.SetActive(false); }
+
+                if (firstTimeDefeatedChampions == true) { ending3CheckMark.SetActive(true); }
+                else { ending3CheckMark.SetActive(false); }
+
+                if (firstTimeDefeatedDangerButton == true) { ending4CheckMark.SetActive(true); }
+                else { ending4CheckMark.SetActive(false); }
+
+                endingFrameEndingsCompleted.text = endingsCompleted + "/4";
+            }
+            else
+            {
+                endingSettingButton.SetActive(false);
+            }
+
+            Cursor.visible = true;
+            isInSettings = true;
+            Time.timeScale = 0;
+            settingsPopUp.SetActive(true);
+            achTooltip.SetActive(false);
+            skinToolTip.SetActive(false);
+            abilityToolTip.SetActive(false);
+            currentRunToolTip.SetActive(false);
+        }
+        else
+        {
+            SetCursors.hoveringClickableStuff = false;
+
+            isInSettings = false;
+            //Debug.Log(isInSettings);
+            if (Choises.isPaused == false)
+            {
+                if (ButtonClick.isStopTimeAbilityActive == false) { Time.timeScale = 1; }
+            }
+            settingsPopUp.SetActive(false);
+            if (wouldYouLikeToReset.activeInHierarchy == true)
+            {
+                wouldYouLikeToReset.SetActive(false);
+            }
+        }
+    }
     #endregion
 
     #region Resolution And Fullscreen
@@ -1600,6 +1638,7 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         SetAlpha(image22, 0.6f);
     }
 
+
     public void PlayGame()
     {
         isInFirstPlayScreen = false;
@@ -1617,6 +1656,7 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     public void SetFalse()
     {
         firstPlayPopUp.SetActive(false);
+       
     }
     #endregion
 

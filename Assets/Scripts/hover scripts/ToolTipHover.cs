@@ -32,316 +32,243 @@ public class ToolTipHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (MobileScript.isMobile == true) { return; }
+
         string objectName = eventData.pointerEnter.name;
-        if(objectName == "questionInfoTab")
+
+        SetAchText(objectName);
+
+        SetCurrentRun(objectName);
+
+        SetLockedSkin(objectName);
+
+        SetAbilityUnlocks(objectName);
+
+        EndingTooltip(objectName);
+
+        #region All Skins Unlocked
+        if (objectName == "Button_Gold")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = "Golden Button";
+            skinsUnlockText.text = "Purchasing the DLC :D";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "button_greyBasic")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = "Basic Grey";
+            skinsUnlockText.text = "Opening the game!";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "button_yellowBasic")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.basicYellowBtn;
+            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch1Amount}";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "button_purpleBasic")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.basicPrupleBtn;
+            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch2Amount}";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "button_greenBasic")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.basicGreeenBtn;
+            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch3Amount}";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_wood")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.woodenBtn;
+            skinsUnlockText.text = $"Clicking the button {Achievements.buttonClicksAch1Amount} times";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_rock")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.rockBtn;
+            skinsUnlockText.text = $"Clicking the button {Achievements.buttonClicksAch2Amount} times";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_Smile")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.funBtn;
+            skinsUnlockText.text = $"Clicking the button {Achievements.buttonClicksAch3Amount} times";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_greenCheap")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.cheapGreenBtn;
+            skinsUnlockText.text = "Hitting 1000 crit clicks";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_Disco")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.discoBtn;
+            skinsUnlockText.text = "Having 6 CPS";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_Lightning")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.lightningBtn;
+            skinsUnlockText.text = "Acquiring all melee weapons in the same run";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_Fire")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.fireBtn;
+            skinsUnlockText.text = $"Defeating {Achievements.enemyKillsAchcount} enemies";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_PureYellow")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.pureYellowBtn;
+            skinsUnlockText.text = $"Defeating {Achievements.titansKillAchCount} titans";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_PureYellow")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.pureYellowBtn;
+            skinsUnlockText.text = $"Defeating {Achievements.titansKillAchCount} titans";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_blue")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.blueBtn;
+            skinsUnlockText.text = $"Acquiring a total of {Achievements.chooseAbilityAchAmount} abilities";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_logo")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.logoBtn;
+            skinsUnlockText.text = "Beating any ending";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_Purple")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.purpleBtn;
+            skinsUnlockText.text = $"Beating ending 1,2 or 3 at level {Choises.levelToFirstEnding}";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "button_SimonSays")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.simonSaysBtn;
+            skinsUnlockText.text = "Acquiring all abilities";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Button_EnemyBtn")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.enemyBtn;
+            skinsUnlockText.text = "Beating all endings!";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+
+        if (objectName == "Background_BlueFade")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = "Blue Fade";
+            skinsUnlockText.text = "Opening the game!";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Backroung_GreenFade")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.greenFade;
+            skinsUnlockText.text = "Acquiring the UZI or Pistol";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "background_pinkFade")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.pinkFade;
+            skinsUnlockText.text = "Acquiring all rare abilities";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Background_PurpleFade")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.purpleFade;
+            skinsUnlockText.text = "Acquiring all legendary abilities";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "BAckground_BlackWave")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.darkWave;
+            skinsUnlockText.text = $"Defeating {Achievements.brutesKillAchCount} brutes";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Background_Hexagon")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.hexagon;
+            skinsUnlockText.text = "Acquiring the talaria";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Background_GreenThick")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.greenStripes;
+            skinsUnlockText.text = "Acquiring all weapons in the same run";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "Background_RedTiles")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.redTiles;
+            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch4Amount}";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        if (objectName == "PinkAndStriped")
+        {
+            skinsToolTip.SetActive(true); skinsHovering = true;
+            skinsNameText.text = LocalizationVariables.redBlackStripes;
+            skinsUnlockText.text = "Acquiring all mythic abilities";
+            unlockRequirmentsText.text = unlockedBy;
+        }
+        #endregion
+    }
+
+    public void EndingTooltip(string name)
+    {
+        string objectName = "";
+
+        if (MobileScript.isMobile == true) { objectName = gameObject.name; }
+        else { objectName = name; }
+
+        if (objectName == "questionInfoTab")
         {
             endingInfoTooltip.SetActive(true);
             infoHovering = true;
         }
+    }
 
-        #region All achievements
-        if (objectName == "ach_level30")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achLevel30;
-        }
+    #region Set Ability unlocked
+    public void SetAbilityUnlocks(string name)
+    {
+        string objectName = "";
 
-        if (objectName == "ach_level60")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achLevel60;
-        }
+        if (MobileScript.isMobile == true) { objectName = gameObject.name; }
+        else { objectName = name; }
 
-        if (objectName == "ach_level90")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achLevel90;
-        }
-
-        if (objectName == "ach_level120")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achLevel120;
-        }
-
-        if (objectName == "ach_crit")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achCrit;
-        }
-
-        if (objectName == "ach_idle")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achCPS;
-        }
-
-        if (objectName == "ach_PISTOL")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achPistol;
-        }
-
-        if (objectName == "ach_Uzi")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achUzi;
-        }
-
-        if (objectName == "ach_CROSSBOW")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achCrossbow;
-        }
-
-        if (objectName == "ach_SHOTGUN")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achShotgun;
-        }
-
-        if (objectName == "ach_DEAGLE")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDeagle;
-        }
-
-        if (objectName == "ach_AWP")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAwp;
-        }
-
-        if (objectName == "ach_CANNON")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achCannon;
-        }
-
-        if (objectName == "ach_MP4")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achMP4;
-        }
-
-        if (objectName == "ach_ability")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAbilities;
-        }
-
-        if (objectName == "ach_1000Arrows")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achPointBlank;
-        }
-
-        if (objectName == "ach_BeatBoss")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achBeatBoss;
-        }
-
-        if (objectName == "ach_BeatHorde")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achBeatHorde;
-        }
-
-        if (objectName == "ach_BeatChampion")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achBeatChampions;
-        }
-
-        if (objectName == "ach_BeatDangerButton")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achBeatDangerButton;
-        }
-
-        if (objectName == "ach_beatAllEndings")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllEndings;
-        }
-
-        if (objectName == "ach_BeatLevel50")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achBeatEndingLevel;
-        }
-
-        if (objectName == "ach_beatEndingTimer")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achBeatRunTimer;
-        }
-
-        if (objectName == "ach_Talaria")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achTalaria;
-        }
-
-        if (objectName == "ach_DoubleTap")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDoubleTap;
-        }
-
-        if (objectName == "ach_StopWatch")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achStopwatch;
-        }
-
-        if (objectName == "ach_Egg")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achEgg;
-        }
-
-        if (objectName == "ach_SkullHarvest")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achSkullHarvest;
-        }
-
-        if (objectName == "ach_1000skulls")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achSkullHarvestConsume;
-        }
-
-        if (objectName == "ach_reroll100")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achReroll;
-        }
-
-        if (objectName == "ach_defeat5000enemies")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatEnemies;
-        }
-
-        if (objectName == "ach_defeatAssassins")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatSssassins;
-        }
-
-        if (objectName == "ach_defeatspeedsters")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatSpeedsters;
-        }
-
-        if (objectName == "ach_defeatSharpshooters")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatSharpshooters;
-        }
-
-        if (objectName == "ach_defeatSnipers")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatSnipers;
-        }
-
-        if (objectName == "ach_defeatHEavyshot")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatHeavyshot;
-        }
-
-        if (objectName == "ach_defeatGunner")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatGunner;
-        }
-
-        if (objectName == "ach_defeatBrute")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatBrutes;
-        }
-
-        if (objectName == "ach_defeatTitan")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achDefeatTitans;
-        }
-
-        if (objectName == "ach_100Clicks")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achClicks1;
-        }
-
-        if (objectName == "ach_5000Clicks")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achClicks2;
-        }
-
-        if (objectName == "ach_50000Clicks")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achClicks3;
-        }
-
-        if (objectName == "ach_allUncommon")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllUncommon;
-        }
-
-        if (objectName == "ach_allrare")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllRare;
-        }
-
-        if (objectName == "ach_alllegendary")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllLegendary;
-        }
-
-        if (objectName == "ach_allmythic")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllMythic;
-        }
-
-        if (objectName == "ach_allAbilities")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllAbilitites;
-        }
-
-        if (objectName == "ach_allGuns")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllGuns;
-        }
-
-        if (objectName == "ach_allMelee")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achAllMelee;
-        }
-
-        if (objectName == "ach_Fun")
-        {
-            achievementToolTip.SetActive(true); achHovering = true;
-            achText.text = LocalizationVariables.achFun;
-        }
-        #endregion
-
-        #region All Ability Unlocks
         if (objectName == "FrameLocked")
         {
             abilitiesTooltip.SetActive(true); abilityHover = true;
@@ -642,9 +569,17 @@ public class ToolTipHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             abilityTooltipNameText.text = LocalizationVariables.skullHarvestTTN;
             abilityToolTipText.text = LocalizationVariables.skullHarvestTT;
         }
-        #endregion
+    }
+    #endregion
 
-        #region All Skins Locked
+    #region Set locked skin
+    public void SetLockedSkin(string name)
+    {
+        string objectName = "";
+
+        if (MobileScript.isMobile == true) { objectName = gameObject.name; }
+        else { objectName = name; }
+
         if (objectName == "lockedGreenBasic")
         {
             skinsToolTip.SetActive(true); skinsHovering = true;
@@ -814,209 +749,17 @@ public class ToolTipHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             skinsUnlockText.text = LocalizationVariables.hexagonRQ;
             unlockRequirmentsText.text = unlockReq;
         }
-        #endregion
+    }
+    #endregion
 
-        #region All Skins Unlocked
-        if (objectName == "Button_Gold")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = "Golden Button";
-            skinsUnlockText.text = "Purchasing the DLC :D";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "button_greyBasic")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = "Basic Grey";
-            skinsUnlockText.text = "Opening the game!";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "button_yellowBasic")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.basicYellowBtn;
-            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch1Amount}";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "button_purpleBasic")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.basicPrupleBtn;
-            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch2Amount}";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "button_greenBasic")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.basicGreeenBtn;
-            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch3Amount}";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_wood")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.woodenBtn;
-            skinsUnlockText.text = $"Clicking the button {Achievements.buttonClicksAch1Amount} times";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_rock")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.rockBtn;
-            skinsUnlockText.text = $"Clicking the button {Achievements.buttonClicksAch2Amount} times";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_Smile")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.funBtn;
-            skinsUnlockText.text = $"Clicking the button {Achievements.buttonClicksAch3Amount} times";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_greenCheap")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.cheapGreenBtn;
-            skinsUnlockText.text = "Hitting 1000 crit clicks";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_Disco")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.discoBtn;
-            skinsUnlockText.text = "Having 6 CPS";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_Lightning")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.lightningBtn;
-            skinsUnlockText.text = "Acquiring all melee weapons in the same run";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_Fire")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.fireBtn;
-            skinsUnlockText.text = $"Defeating {Achievements.enemyKillsAchcount} enemies";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_PureYellow")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.pureYellowBtn;
-            skinsUnlockText.text = $"Defeating {Achievements.titansKillAchCount} titans";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_PureYellow")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.pureYellowBtn;
-            skinsUnlockText.text = $"Defeating {Achievements.titansKillAchCount} titans";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_blue")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.blueBtn;
-            skinsUnlockText.text = $"Acquiring a total of {Achievements.chooseAbilityAchAmount} abilities";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_logo")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.logoBtn;
-            skinsUnlockText.text = "Beating any ending";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_Purple")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.purpleBtn;
-            skinsUnlockText.text = $"Beating ending 1,2 or 3 at level {Choises.levelToFirstEnding}";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "button_SimonSays")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.simonSaysBtn;
-            skinsUnlockText.text = "Acquiring all abilities";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Button_EnemyBtn")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.enemyBtn;
-            skinsUnlockText.text = "Beating all endings!";
-            unlockRequirmentsText.text = unlockedBy;
-        }
+    #region Set current run
+    public void SetCurrentRun(string name)
+    {
+        string objectName = "";
 
-        if (objectName == "Background_BlueFade")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = "Blue Fade";
-            skinsUnlockText.text = "Opening the game!";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Backroung_GreenFade")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.greenFade;
-            skinsUnlockText.text = "Acquiring the UZI or Pistol";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "background_pinkFade")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.pinkFade;
-            skinsUnlockText.text = "Acquiring all rare abilities";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Background_PurpleFade")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.purpleFade;
-            skinsUnlockText.text = "Acquiring all legendary abilities";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "BAckground_BlackWave")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.darkWave;
-            skinsUnlockText.text = $"Defeating {Achievements.brutesKillAchCount} brutes";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Background_Hexagon")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.hexagon;
-            skinsUnlockText.text = "Acquiring the talaria";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Background_GreenThick")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.greenStripes;
-            skinsUnlockText.text = "Acquiring all weapons in the same run";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "Background_RedTiles")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.redTiles;
-            skinsUnlockText.text = $"Reaching level {Achievements.reachLevelAch4Amount}";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        if (objectName == "PinkAndStriped")
-        {
-            skinsToolTip.SetActive(true); skinsHovering = true;
-            skinsNameText.text = LocalizationVariables.redBlackStripes;
-            skinsUnlockText.text = "Acquiring all mythic abilities";
-            unlockRequirmentsText.text = unlockedBy;
-        }
-        #endregion
+        if (MobileScript.isMobile == true) { objectName = gameObject.name; }
+        else { objectName = name; }
 
-        #region All CurrentRun
         if (objectName == "PointFrameCurrent")
         {
             currentRunToolTip.SetActive(true);
@@ -1057,7 +800,7 @@ public class ToolTipHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             thirdStar.text = LocalizationVariables.critIncrease;
             firstStatAmount.text = Choises.critLEVEL.ToString("F0");
             secondStatAmount.text = Choises.critClicksChance.ToString("F1") + "%";
-            thirdStarAmount.text = (Choises.critClicksBonus * 100).ToString("F0")  + "%";
+            thirdStarAmount.text = (Choises.critClicksBonus * 100).ToString("F0") + "%";
             fourthStat.text = ""; fifthStat.text = "";
             fourthStatAmount.text = ""; fifthStatAmount.text = "";
             onlyInfoText.text = "";
@@ -1684,13 +1427,324 @@ public class ToolTipHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             fourthStatAmount.text = ""; fifthStatAmount.text = "";
             currentRunName.text = LocalizationVariables.eggTTN;
         }
-        #endregion
-
-        //Debug.Log(objectName);
     }
+    #endregion
+
+    #region Ach texts
+    public void SetAchText(string name)
+    {
+        string objectName = "";
+
+        if (MobileScript.isMobile == true) { objectName = gameObject.name; }
+        else { objectName = name; }
+
+        if (objectName == "ach_level30")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achLevel30;
+        }
+
+        if (objectName == "ach_level60")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achLevel60;
+        }
+
+        if (objectName == "ach_level90")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achLevel90;
+        }
+
+        if (objectName == "ach_level120")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achLevel120;
+        }
+
+        if (objectName == "ach_crit")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achCrit;
+        }
+
+        if (objectName == "ach_idle")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achCPS;
+        }
+
+        if (objectName == "ach_PISTOL")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achPistol;
+        }
+
+        if (objectName == "ach_Uzi")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achUzi;
+        }
+
+        if (objectName == "ach_CROSSBOW")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achCrossbow;
+        }
+
+        if (objectName == "ach_SHOTGUN")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achShotgun;
+        }
+
+        if (objectName == "ach_DEAGLE")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDeagle;
+        }
+
+        if (objectName == "ach_AWP")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAwp;
+        }
+
+        if (objectName == "ach_CANNON")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achCannon;
+        }
+
+        if (objectName == "ach_MP4")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achMP4;
+        }
+
+        if (objectName == "ach_ability")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAbilities;
+        }
+
+        if (objectName == "ach_1000Arrows")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achPointBlank;
+        }
+
+        if (objectName == "ach_BeatBoss")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achBeatBoss;
+        }
+
+        if (objectName == "ach_BeatHorde")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achBeatHorde;
+        }
+
+        if (objectName == "ach_BeatChampion")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achBeatChampions;
+        }
+
+        if (objectName == "ach_BeatDangerButton")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achBeatDangerButton;
+        }
+
+        if (objectName == "ach_beatAllEndings")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllEndings;
+        }
+
+        if (objectName == "ach_BeatLevel50")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achBeatEndingLevel;
+        }
+
+        if (objectName == "ach_beatEndingTimer")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achBeatRunTimer;
+        }
+
+        if (objectName == "ach_Talaria")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achTalaria;
+        }
+
+        if (objectName == "ach_DoubleTap")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDoubleTap;
+        }
+
+        if (objectName == "ach_StopWatch")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achStopwatch;
+        }
+
+        if (objectName == "ach_Egg")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achEgg;
+        }
+
+        if (objectName == "ach_SkullHarvest")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achSkullHarvest;
+        }
+
+        if (objectName == "ach_1000skulls")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achSkullHarvestConsume;
+        }
+
+        if (objectName == "ach_reroll100")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achReroll;
+        }
+
+        if (objectName == "ach_defeat5000enemies")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatEnemies;
+        }
+
+        if (objectName == "ach_defeatAssassins")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatSssassins;
+        }
+
+        if (objectName == "ach_defeatspeedsters")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatSpeedsters;
+        }
+
+        if (objectName == "ach_defeatSharpshooters")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatSharpshooters;
+        }
+
+        if (objectName == "ach_defeatSnipers")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatSnipers;
+        }
+
+        if (objectName == "ach_defeatHEavyshot")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatHeavyshot;
+        }
+
+        if (objectName == "ach_defeatGunner")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatGunner;
+        }
+
+        if (objectName == "ach_defeatBrute")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatBrutes;
+        }
+
+        if (objectName == "ach_defeatTitan")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achDefeatTitans;
+        }
+
+        if (objectName == "ach_100Clicks")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achClicks1;
+        }
+
+        if (objectName == "ach_5000Clicks")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achClicks2;
+        }
+
+        if (objectName == "ach_50000Clicks")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achClicks3;
+        }
+
+        if (objectName == "ach_allUncommon")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllUncommon;
+        }
+
+        if (objectName == "ach_allrare")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllRare;
+        }
+
+        if (objectName == "ach_alllegendary")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllLegendary;
+        }
+
+        if (objectName == "ach_allmythic")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllMythic;
+        }
+
+        if (objectName == "ach_allAbilities")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllAbilitites;
+        }
+
+        if (objectName == "ach_allGuns")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllGuns;
+        }
+
+        if (objectName == "ach_allMelee")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achAllMelee;
+        }
+
+        if (objectName == "ach_Fun")
+        {
+            achievementToolTip.SetActive(true); achHovering = true;
+            achText.text = LocalizationVariables.achFun;
+        }
+    }
+    #endregion
+
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if(MobileScript.isMobile == true) { return; }
+
         if (skinsHovering == true)
         {
             skinsHovering = false;
@@ -1719,25 +1773,28 @@ public class ToolTipHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Update()
     {
-        if(infoHovering == true)
+        if (MobileScript.isMobile == false) 
         {
-            endingInfoTooltip.transform.position = Input.mousePosition;
-        }
-        if (achHovering == true)
-        {
-            achievementToolTip.transform.position = Input.mousePosition;
-        }
-        if (abilityHover == true)
-        {
-            abilitiesTooltip.transform.position = Input.mousePosition;
-        }
-        if (skinsHovering == true)
-        {
-            skinsToolTip.transform.position = Input.mousePosition;
-        }
-        if (currentRunHovering == true)
-        {
-            currentRunToolTip.transform.position = Input.mousePosition;
+            if (infoHovering == true)
+            {
+                endingInfoTooltip.transform.position = Input.mousePosition;
+            }
+            if (achHovering == true)
+            {
+                achievementToolTip.transform.position = Input.mousePosition;
+            }
+            if (abilityHover == true)
+            {
+                abilitiesTooltip.transform.position = Input.mousePosition;
+            }
+            if (skinsHovering == true)
+            {
+                skinsToolTip.transform.position = Input.mousePosition;
+            }
+            if (currentRunHovering == true)
+            {
+                currentRunToolTip.transform.position = Input.mousePosition;
+            }
         }
     }
 }
