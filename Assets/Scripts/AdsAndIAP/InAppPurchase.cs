@@ -29,6 +29,7 @@ public class InAppPurchase : MonoBehaviour, IDetailedStoreListener
             is7CpsPlayerpref = PlayerPrefs.GetInt("is7Cps");
             is12CpsPlayerpref = PlayerPrefs.GetInt("is12Cps");
         }
+
     }
 
     #region All Remove ADS stuff

@@ -454,12 +454,16 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         {
             if (MobileScript.isMobile == false) { showTimer = 0; }
             else { showTimer = 1; }
+
+            PlayerPrefs.SetInt("ShowTimer", showTimer);
         }
 
         if (!PlayerPrefs.HasKey("DisplayAbilityClicks"))
         {
             if(MobileScript.isMobile == false) { displayAbilityClicks = 0; }
             else { displayAbilityClicks = 1; }
+
+            PlayerPrefs.SetInt("DisplayAbilityClicks", displayAbilityClicks);
         }
 
         if (!PlayerPrefs.HasKey("DisablePointPopUp")) { disablePointPopUp = 0; }
@@ -528,7 +532,13 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         }
 
         locScript.SettingsToggleText();
+
+        yield return new WaitForSeconds(2);
+        loaded = true;
+        PlayerPrefs.Save();
     }
+
+    bool loaded;
 
     public GameObject timerToggleOff, timerToggleOn, clicksToggleOff, clicksToggleOn, pointsToggleOff, pointsToggleOn, particleToggleOff, particleToggleOn, damageToggleOff, damageToggleOn, healthbarToggleOff, healthbarToggleOn, brokenPiecesToggleOff, brokenPiecesToggleOn, whiteFlashToggleOn, whiteFlashToggleOff;
 
@@ -1187,9 +1197,12 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         #region Pause and unpause
         if (Choises.isInFirstWeaponScreen == false && Choises.isInChooseEndingScreen == false && Choises.isInWinScreen == false && Choises.isInDeathScreen == false && Choises.isEndingTransition == false)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if(MobileScript.isMobile == false)
             {
-                SettingsMechanics(true);
+                if (Input.GetKeyDown(KeyCode.Escape) && loaded == true)
+                {
+                    SettingsMechanics(true);
+                }
             }
         }
         #endregion
@@ -1511,6 +1524,7 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     #region Settings mechaincs
     public void SettingsMechanics(bool openSettings)
     {
+        if(loaded == false) { return; }
         if (ButtonBehiavor.chargeSoundPlaying == true)
         {
             ButtonBehiavor.chargeSoundPlaying = false;
