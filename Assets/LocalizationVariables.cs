@@ -102,8 +102,6 @@ public class LocalizationVariables : MonoBehaviour
     #endregion
 
     public GameObject arenaIcon, arenaLargerIcon;
-
-
     void Start()
     {
         SetText();
@@ -429,6 +427,7 @@ public class LocalizationVariables : MonoBehaviour
             uziCommonSpeedText.text = $"Bullet speed: <color=green>{Choises.smallBulletSpeed.ToString("F0")} (+{Choises.uziCommonSpeedIncrease.ToString("F0")})";
             uziCommonDamageText.text = $"Bullet damage: <color=green>{Choises.smallBulletDamage.ToString("F0")} (+{Choises.uziCommonDamageIncrease.ToString("F0")})";
         }
+       
     }
 
     public void PistolText()
@@ -437,7 +436,16 @@ public class LocalizationVariables : MonoBehaviour
         {
             if (Choises.chose_Gun1 == false) { pistolName = "Pistol"; }
             if (Choises.chose_Gun1 == true) { pistolName = "Pistol+"; }
-            if (Choises.chose_Gun1 == false) { pistolInfo = $"The pistol shoots a bullet every {Choises.pistolClicksNeeded} button clicks in the aimed direction."; }
+
+            if(MobileScript.isMobile == false)
+            {
+                if (Choises.chose_Gun1 == false) { pistolInfo = $"The pistol shoots a bullet every {Choises.pistolClicksNeeded} button clicks in the aimed direction."; }
+            }
+            else
+            {
+                if (Choises.chose_Gun1 == false) { pistolInfo = $"The pistol shoots a bullet every {Choises.pistolClicksNeeded} button clicks. The pistol targets a random enemy."; }
+            }
+         
             if (Choises.chose_Gun1 == true) { pistolInfo = "Improve the pistol."; }
 
             if (Choises.chose_Gun1 == false)
@@ -469,7 +477,16 @@ public class LocalizationVariables : MonoBehaviour
         {
             if (Choises.chose_gun2 == false) { shotgunName = "Shotgun"; }
             if (Choises.chose_gun2 == true) { shotgunName = "Shotgun+"; }
-            if (Choises.chose_gun2 == false) { shotgunInfo = $"Every {Choises.shotGunClicksNeeded} button clicks shoots a shotgun blast in the aimed direction."; }
+
+            if (MobileScript.isMobile == false)
+            {
+                if (Choises.chose_gun2 == false) { shotgunInfo = $"Every {Choises.shotGunClicksNeeded} button clicks shoots a shotgun blast in the aimed direction."; }
+            }
+            else
+            {
+                if (Choises.chose_gun2 == false) { shotgunInfo = $"Every {Choises.shotGunClicksNeeded} button clicks shoots a shotgun blast. The shotgun targets the closest enemy."; }
+            }
+           
             if (Choises.chose_gun2 == true) { shotgunInfo = "Improve the shotgun."; }
 
             if (Choises.chose_gun2 == false)
@@ -569,7 +586,16 @@ public class LocalizationVariables : MonoBehaviour
         {
             if (Choises.choseCrossBow == false) { crossbowName = "Crossbow"; }
             if (Choises.choseCrossBow == true) { crossbowName = "Crossbow+"; }
-            if (Choises.choseCrossBow == false) { crossbowInfo = $"Every {Choises.crossbowClicksNeeded} button clicks shoots a bolt in the aimed direction."; }
+
+            if (MobileScript.isMobile == false)
+            {
+                if (Choises.choseCrossBow == false) { crossbowInfo = $"Every {Choises.crossbowClicksNeeded} button clicks shoots a bolt in the aimed direction."; }
+            }
+            else
+            {
+                if (Choises.choseCrossBow == false) { crossbowInfo = $"Every {Choises.crossbowClicksNeeded} button clicks shoots a bolt. The crossbow targets a random enemy."; }
+            }
+
             if (Choises.choseCrossBow == true) { crossbowInfo = "Improve the crossbow."; }
 
             if (Choises.choseCrossBow == false)
@@ -634,7 +660,16 @@ public class LocalizationVariables : MonoBehaviour
             //mp4
             if (Choises.choseGunMp4 == false) { mp4Name = "MP4"; }
             if (Choises.choseGunMp4 == true) { mp4Name = "MP4+"; }
-            if (Choises.choseGunMp4 == false) { mp4Info = $"The MP4 shoots a bullet every {Choises.mp4ClicksNeeded} button clicks in the aimed direction."; }
+
+            if (MobileScript.isMobile == false)
+            {
+                if (Choises.choseGunMp4 == false) { mp4Info = $"The MP4 shoots a bullet every {Choises.mp4ClicksNeeded} button clicks in the aimed direction."; }
+            }
+            else
+            {
+                if (Choises.choseGunMp4 == false) { mp4Info = $"The MP4 shoots a bullet every {Choises.mp4ClicksNeeded} button clicks. The MP4 targets a random enemy."; }
+            }
+           
             if (Choises.choseGunMp4 == true) { mp4Info = "Improve the MP4."; }
 
             if (Choises.choseGunMp4 == false)
@@ -1060,7 +1095,15 @@ public class LocalizationVariables : MonoBehaviour
             if (Choises.choseBouncingBullets == false) { arenaName = "Arena + Bullet Bounce"; }
             if (Choises.choseBouncingBullets == true) { arenaName = "Larger Arena"; }
 
-            if (Choises.choseBouncingBullets == false) { arenaInfo = "Creates an arena. All round bullets now bounce. Zoom in and out using the scrollwheel."; }
+            if(MobileScript.isMobile == false)
+            {
+                if (Choises.choseBouncingBullets == false) { arenaInfo = "Creates an arena. All round bullets now bounce. Zoom in and out using the scrollwheel."; }
+            }
+            else
+            {
+                if (Choises.choseBouncingBullets == false) { arenaInfo = "Creates an arena. All round bullets now bounce. You can  now zoom the game in and out."; }
+            }
+
             if (Choises.choseBouncingBullets == true) { arenaInfo = "Larger arena, enemies spawn further away."; }
 
             arenaNameText.text = arenaName;
@@ -1113,7 +1156,15 @@ public class LocalizationVariables : MonoBehaviour
             if (Choises.choseInvincibility == false) { invincibilityName = "INVINCIBILITY"; }
             if (Choises.choseInvincibility == true) { invincibilityName = "INVINCIBILITY+"; }
 
-            if (Choises.choseInvincibility == false) { invincibilityInfo = $"You can now turn invincible. Every {Choises.invincibilityClickPer1Second} button clicks adds 1 second to your invincibility.\n\nPress \"Q\" To turn your invincibility ON and OFF. You cannot take damage while invincible."; }
+            if(MobileScript.isMobile == false)
+            {
+                if (Choises.choseInvincibility == false) { invincibilityInfo = $"You can now turn invincible. Every {Choises.invincibilityClickPer1Second} button clicks adds 1 second to your invincibility.\n\nPress \"Q\" To turn your invincibility ON and OFF. You cannot take damage while invincible."; }
+            }
+            else
+            {
+                if (Choises.choseInvincibility == false) { invincibilityInfo = $"You can now turn invincible. Every {Choises.invincibilityClickPer1Second} button clicks adds 1 second to your invincibility.\n\nPress the small button that appears to turn your invincibility ON and OFF. You cannot take damage while invincible."; }
+            }
+            
             if (Choises.choseInvincibility == true) { invincibilityInfo = "Improve the invincibility."; }
 
             if (Choises.choseInvincibility == false)
@@ -1270,7 +1321,6 @@ public class LocalizationVariables : MonoBehaviour
         }
     }
     #endregion
-
 
     #region Enemy Stats Text
     public TextMeshProUGUI smallEnemyHP, smallEnemyDamage, smallEnemyPoints;

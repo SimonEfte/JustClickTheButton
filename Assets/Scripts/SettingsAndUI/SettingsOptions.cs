@@ -11,10 +11,12 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     public GameObject firstPlayPopUp, firstPlayFrame;
     public GameObject spaceBarButton, spaceBarButtonSettings, leftClickButton, leftClickButtonSettings;
 
+    public GameObject mobileShopBtn;
+
     public GameObject checkMarkSpacebar, checkMArkLeftClick, crossSpacebar, crossLeftClick, buttonLeftClickBlock;
     public GameObject checkMarkSpacebarSettings, checkMArkLeftClickSettings, crossSpacebarSettings, crossLeftClickSettings;
 
-    public GameObject settingsPopUp;
+    public GameObject settingsPopUp, mobileShopFrame;
     public GameObject settingFrame, achFrame, skinsFrame, statsFrame, infoFrame;
 
     public GameObject selectedSettingGlow, settingText, achText, skinsText, statsText, infoText, controlsText, endingsText, currentRunText;
@@ -145,9 +147,6 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         spaceBarSelected = false;
         leftClickSeleced = false;
 
-        //if (firstTimeOpenedGame == false) { firstPlayPopUp.SetActive(true); }
-        //if (firstTimeOpenedGame == true) { firstPlayPopUp.SetActive(false); }
-
         triggerResolution = true;
 
         if (!PlayerPrefs.HasKey("saveIndex"))
@@ -163,7 +162,6 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         if (!PlayerPrefs.HasKey("ScreenWidth"))
         {
             Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
-            //Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
         }
         else
         {
@@ -452,8 +450,18 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
             continueRunBTN.interactable = false;
         }
 
-        if (!PlayerPrefs.HasKey("ShowTimer")) { showTimer = 0; }
-        if (!PlayerPrefs.HasKey("DisplayAbilityClicks")) { displayAbilityClicks = 0; }
+        if (!PlayerPrefs.HasKey("ShowTimer")) 
+        {
+            if (MobileScript.isMobile == false) { showTimer = 0; }
+            else { showTimer = 1; }
+        }
+
+        if (!PlayerPrefs.HasKey("DisplayAbilityClicks"))
+        {
+            if(MobileScript.isMobile == false) { displayAbilityClicks = 0; }
+            else { displayAbilityClicks = 1; }
+        }
+
         if (!PlayerPrefs.HasKey("DisablePointPopUp")) { disablePointPopUp = 0; }
         if (!PlayerPrefs.HasKey("DisableParticleEffects")) { disableParticleEffects = 0; }
         if (!PlayerPrefs.HasKey("DisableDamagePopUp")) { disableEnemyDamagePopUp = 0; }
@@ -464,16 +472,18 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         if (PlayerPrefs.HasKey("ShowTimer"))
         {
             showTimer = PlayerPrefs.GetInt("ShowTimer");
-            if (showTimer == 1) { timerToggleOff.SetActive(false); timerToggleOn.SetActive(true); }
-            if (showTimer == 0) { timerToggleOff.SetActive(true); timerToggleOn.SetActive(false); }
         }
+
+        if (showTimer == 1) { timerToggleOff.SetActive(false); timerToggleOn.SetActive(true); }
+        if (showTimer == 0) { timerToggleOff.SetActive(true); timerToggleOn.SetActive(false); }
 
         if (PlayerPrefs.HasKey("DisplayAbilityClicks"))
         {
             displayAbilityClicks = PlayerPrefs.GetInt("DisplayAbilityClicks");
-            if (displayAbilityClicks == 1) { clicksToggleOff.SetActive(false); clicksToggleOn.SetActive(true); }
-            if (displayAbilityClicks == 0) { clicksToggleOff.SetActive(true); clicksToggleOn.SetActive(false); }
         }
+
+        if (displayAbilityClicks == 1) { clicksToggleOff.SetActive(false); clicksToggleOn.SetActive(true); }
+        if (displayAbilityClicks == 0) { clicksToggleOff.SetActive(true); clicksToggleOn.SetActive(false); }
 
         if (PlayerPrefs.HasKey("HealthbarPosition"))
         {
@@ -836,11 +846,26 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
                 clicksToggleOff.SetActive(false); clicksToggleOn.SetActive(true); abilityClicks.SetActive(true);
 
                 buttonClickScript.CheckAbilitysActive();
-               
             }
         }
     }
     #endregion
+
+    public void CheckTimerAndStuff()
+    {
+        if (displayAbilityClicks == 0)
+        {
+            clicksToggleOff.SetActive(true); clicksToggleOn.SetActive(false); abilityClicks.SetActive(false);
+        }
+        if (displayAbilityClicks == 1)
+        {
+            clicksToggleOff.SetActive(false); clicksToggleOn.SetActive(true); abilityClicks.SetActive(true);
+            buttonClickScript.CheckAbilitysActive();
+        }
+
+        if (showTimer == 0) { timerToggleOff.SetActive(true); timerToggleOn.SetActive(false); timerTopRight.SetActive(false); }
+        if (showTimer == 1) { timerToggleOff.SetActive(false); timerToggleOn.SetActive(true); timerTopRight.SetActive(true); }
+    }
 
     public void SwitchAduio()
     {
@@ -878,8 +903,6 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
 
         PlayRandomSong(1);
 
-        if (showTimer == 1) { timerTopRight.SetActive(true); }
-
         if (isPlayerPlayingARun == false)
         {
             audioManager.Play("CircleTranIn");
@@ -887,8 +910,14 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
             isInSettings = false; 
             ButtonClick.pointsGained = 0;
             ButtonClick.pointsNeeded = 20;
+
+            if (showTimer == 1) { timerTopRight.SetActive(true); }
+            CheckTimerAndStuff();
         }
-        else { wouldYouLikeToReset.SetActive(true); audioManager.Play("UI_Click2"); }
+        else 
+        { 
+            wouldYouLikeToReset.SetActive(true); audioManager.Play("UI_Click2");
+        }
     }
 
     public void NoReset()
@@ -1129,19 +1158,29 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
 
         if(MobileScript.isMobile == true)
         {
-            if(Choises.isInMainManu == true) { isMobileSettingBTN = false; }
+            if(Choises.isInMainManu == true) { isMobileSettingBTN = false;   }
 
             if (Choises.isInFirstWeaponScreen == true || Choises.isInChooseEndingScreen == true || Choises.isInWinScreen == true || Choises.isInDeathScreen == true || Choises.isEndingTransition == true || Choises.isInEggScreen == true)
             {
                 mobileSettingsBTN.SetActive(false);
+                mobileShopBtn.SetActive(false);
             }
             else 
             { 
                 if (isMobileSettingBTN == true)
                 {
                     mobileSettingsBTN.SetActive(true);
+
+                    if (InAppPurchase.isAdsRemoved == true && InAppPurchase.is12Cps == true)
+                    {
+                        mobileShopBtn.SetActive(false);
+                    }
+                    else
+                    {
+                        mobileShopBtn.SetActive(true);
+                    }
                 }
-                else { mobileSettingsBTN.SetActive(false); }
+                else { mobileSettingsBTN.SetActive(false); mobileShopBtn.SetActive(false); }
             }
         }
 
@@ -1150,7 +1189,7 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                SettingsMechanics();
+                SettingsMechanics(true);
             }
         }
         #endregion
@@ -1470,9 +1509,8 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
     #endregion
 
     #region Settings mechaincs
-    public void SettingsMechanics()
+    public void SettingsMechanics(bool openSettings)
     {
-        //Debug.Log("Pause");
         if (ButtonBehiavor.chargeSoundPlaying == true)
         {
             ButtonBehiavor.chargeSoundPlaying = false;
@@ -1491,40 +1529,47 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
             MainButtonCollider.isChargeSound = false;
         }
 
-
         audioManager.Play("UI_Click2");
-        if (settingsPopUp.activeInHierarchy == false)
+
+        if (settingsPopUp.activeInHierarchy == false && mobileShopFrame.activeInHierarchy == false)
         {
-            if (Choises.isInChooseEndingScreen == false && ButtonClick.level > 74 && BossMechanics.fightingBossFight == false && MimicEnding.isPlayingChamptions == false && DangerButtonEnding.isPlayingDangerButton == false && HordeEnding.playingHordeEnding == false)
+            if(MobileScript.openShop == false)
             {
-                endingSettingButton.SetActive(true);
-                if (firstTimeDefeatedBoss == true) { ending1CheckMark.SetActive(true); }
-                else { ending1CheckMark.SetActive(false); }
+                if (Choises.isInChooseEndingScreen == false && ButtonClick.level > 74 && BossMechanics.fightingBossFight == false && MimicEnding.isPlayingChamptions == false && DangerButtonEnding.isPlayingDangerButton == false && HordeEnding.playingHordeEnding == false)
+                {
+                    endingSettingButton.SetActive(true);
+                    if (firstTimeDefeatedBoss == true) { ending1CheckMark.SetActive(true); }
+                    else { ending1CheckMark.SetActive(false); }
 
-                if (firstTimeDefeatedHorde == true) { ending2CheckMark.SetActive(true); }
-                else { ending2CheckMark.SetActive(false); }
+                    if (firstTimeDefeatedHorde == true) { ending2CheckMark.SetActive(true); }
+                    else { ending2CheckMark.SetActive(false); }
 
-                if (firstTimeDefeatedChampions == true) { ending3CheckMark.SetActive(true); }
-                else { ending3CheckMark.SetActive(false); }
+                    if (firstTimeDefeatedChampions == true) { ending3CheckMark.SetActive(true); }
+                    else { ending3CheckMark.SetActive(false); }
 
-                if (firstTimeDefeatedDangerButton == true) { ending4CheckMark.SetActive(true); }
-                else { ending4CheckMark.SetActive(false); }
+                    if (firstTimeDefeatedDangerButton == true) { ending4CheckMark.SetActive(true); }
+                    else { ending4CheckMark.SetActive(false); }
 
-                endingFrameEndingsCompleted.text = endingsCompleted + "/4";
-            }
-            else
-            {
-                endingSettingButton.SetActive(false);
+                    endingFrameEndingsCompleted.text = endingsCompleted + "/4";
+                }
+                else
+                {
+                    endingSettingButton.SetActive(false);
+                }
             }
 
             Cursor.visible = true;
             isInSettings = true;
             Time.timeScale = 0;
-            settingsPopUp.SetActive(true);
-            achTooltip.SetActive(false);
-            skinToolTip.SetActive(false);
-            abilityToolTip.SetActive(false);
-            currentRunToolTip.SetActive(false);
+
+            if (MobileScript.openShop == false)
+            {
+                settingsPopUp.SetActive(true);
+                achTooltip.SetActive(false);
+                skinToolTip.SetActive(false);
+                abilityToolTip.SetActive(false);
+                currentRunToolTip.SetActive(false);
+            }
         }
         else
         {
@@ -1788,8 +1833,9 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
         audioManager.Play("UI_Click2");
         Choises.isInMainManu = false;
         SetAllStatsBack();
+        CheckTimerAndStuff();
 
-        if(keepDangerbutton == false)
+        if (keepDangerbutton == false)
         {
             Choises.choseHealthBar = false;
             Choises.regenHealth = false;

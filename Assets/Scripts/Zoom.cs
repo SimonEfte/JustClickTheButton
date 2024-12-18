@@ -66,7 +66,7 @@ public class Zoom : MonoBehaviour
                 {
                     if(Choises.movementAbilityAquaried == true)
                     {
-                        if (Input.GetKeyDown(KeyCode.Tab))
+                        if (Input.GetKeyDown(KeyCode.Tab) && MobileScript.isMobile == false)
                         {
                             if (HordeEnding.playingHordeEnding == false)
                             {
@@ -80,17 +80,51 @@ public class Zoom : MonoBehaviour
                         mainCamera.transform.position = new Vector3(targetToFollow.position.x, targetToFollow.position.y, mainCamera.transform.position.z);
                     }
 
-                    // Get the scroll wheel input
-                    float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+                    if(MobileScript.isMobile == false)
+                    {
+                        // Get the scroll wheel input
+                        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
-                    // Calculate the new target zoom level
-                    targetZoom -= scrollInput * zoomSpeed;
+                        // Calculate the new target zoom level
+                        targetZoom -= scrollInput * zoomSpeed;
 
-                    // Clamp the target zoom within the min and max values
-                    targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
+                        // Clamp the target zoom within the min and max values
+                        targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
 
-                    // Smoothly interpolate towards the target zoom
-                    mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetZoom, Time.deltaTime * zoomSmoothness);
+                        // Smoothly interpolate towards the target zoom
+                        mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetZoom, Time.deltaTime * zoomSmoothness);
+                    }
+                    else
+                    {
+                        if(JoystickMechanics.isUsingJoystick == false)
+                        {
+                            //Mobile ZOOM
+                            if (Input.touchCount == 2) // If there are two fingers on the screen
+                            {
+                                Touch touch1 = Input.GetTouch(0);
+                                Touch touch2 = Input.GetTouch(1);
+
+                                // Calculate the distance between touches in the current and previous frame
+                                Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
+                                Vector2 touch2PrevPos = touch2.position - touch2.deltaPosition;
+
+                                float prevTouchDeltaMag = (touch1PrevPos - touch2PrevPos).magnitude;
+                                float currentTouchDeltaMag = (touch1.position - touch2.position).magnitude;
+
+                                // Calculate the difference in distances between frames
+                                float deltaMagnitudeDiff = prevTouchDeltaMag - currentTouchDeltaMag;
+
+                                // Update the target zoom based on the pinch movement
+                                targetZoom += deltaMagnitudeDiff * 1;
+
+                                // Clamp the target zoom within the min and max values
+                                targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
+                            }
+
+                            // Smoothly interpolate towards the target zoom
+                            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetZoom, Time.deltaTime * 2.25f);
+                        }
+                    }
                 }
             }
         }
@@ -98,6 +132,11 @@ public class Zoom : MonoBehaviour
 
     public void ChangeCamera()
     {
+        if (Choises.isInLevelUpScreen == true || Choises.isInChooseEndingScreen == true)
+        {
+            return;
+        }
+
         isFollowingTarget = !isFollowingTarget;
 
         if (isFollowingTarget)

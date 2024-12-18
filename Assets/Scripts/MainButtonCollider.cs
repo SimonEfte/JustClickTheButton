@@ -47,6 +47,7 @@ public class MainButtonCollider : MonoBehaviour
 
     void Start()
     {
+        randomPistolEnemy = null;
         boxingGloveCoroutine = null;
 
         orbitSpeed = 50f;
@@ -166,33 +167,26 @@ public class MainButtonCollider : MonoBehaviour
         #region Booster
         if (Choises.choseButtonBounceCharge == true && SettingsOptions.isInSettings == false && Choises.isInMainManu == false)
         {
-            if (Input.GetKey(KeyCode.Mouse0) && isChargePressed == true || Input.GetKey(KeyCode.LeftControl))
+            if(MobileScript.isMobile == false)
             {
-                if(chargeNeeded > 0f)
+                if (Input.GetKey(KeyCode.Mouse0) && isChargePressed == true || Input.GetKey(KeyCode.LeftControl))
                 {
-                    //Debug.Log(chargeNeeded);
-                    smallButton.transform.Rotate(Vector3.forward * speed2 * Time.deltaTime);
+                    Booster(true);
                 }
-                else { smallButton.transform.Rotate(Vector3.forward * speed * Time.deltaTime); }
-
-                if (chargeCoroutine == null)
+                else
                 {
-                    ChargeSmallButton();
+                    Booster(false);
                 }
             }
             else
             {
-                smallButton.transform.Rotate(Vector3.forward * speed * Time.deltaTime);
-
-                if (chargeCoroutine != null)
+                if (MobileBtnPress.holdingDown == true)
                 {
-                    if(chargeForce > 0) { ApplyOppositeForce(); }
-                    StopCoroutine(chargeCoroutine);
-                    charge = 0f;
-                    chargeForce = 0f;
-                    chargeNeeded = 0f;
-                    chargeObject.transform.localScale = new Vector3(0, 0, 0);
-                    chargeCoroutine = null;
+                    Booster(true);
+                }
+                else
+                {
+                    Booster(false);
                 }
             }
         }
@@ -205,10 +199,13 @@ public class MainButtonCollider : MonoBehaviour
             {
                 if (Choises.isPaused == false)
                 {
-                    pistolDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-                    float angle = Mathf.Atan2(pistolDir.y, pistolDir.x) * Mathf.Rad2Deg;
-                    Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-                    gun1.transform.rotation = rotation;
+                    if(MobileScript.isMobile == false)
+                    {
+                        pistolDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                        float angle = Mathf.Atan2(pistolDir.y, pistolDir.x) * Mathf.Rad2Deg;
+                        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+                        gun1.transform.rotation = rotation;
+                    }
                 }
             }
             #endregion
@@ -218,10 +215,13 @@ public class MainButtonCollider : MonoBehaviour
             {
                 if (Choises.isPaused == false)
                 {
-                    shotgunDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-                    float angle = Mathf.Atan2(shotgunDir.y, shotgunDir.x) * Mathf.Rad2Deg;
-                    Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-                    gun2.transform.rotation = rotation;
+                    if (MobileScript.isMobile == false)
+                    {
+                        shotgunDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                        float angle = Mathf.Atan2(shotgunDir.y, shotgunDir.x) * Mathf.Rad2Deg;
+                        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+                        gun2.transform.rotation = rotation;
+                    }
                 }
             }
             #endregion
@@ -231,11 +231,13 @@ public class MainButtonCollider : MonoBehaviour
             {
                 if (Choises.isPaused == false)
                 {
-                    mp4Dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-                    float angle = Mathf.Atan2(mp4Dir.y, mp4Dir.x) * Mathf.Rad2Deg;
-                    Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-                    gun3.transform.rotation = rotation;
-
+                    if (MobileScript.isMobile == false)
+                    {
+                        mp4Dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                        float angle = Mathf.Atan2(mp4Dir.y, mp4Dir.x) * Mathf.Rad2Deg;
+                        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+                        gun3.transform.rotation = rotation;
+                    }
                 }
             }
             #endregion
@@ -245,10 +247,13 @@ public class MainButtonCollider : MonoBehaviour
             {
                 if (Choises.isPaused == false)
                 {
-                    crossbowDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-                    float angle = Mathf.Atan2(crossbowDir.y, crossbowDir.x) * Mathf.Rad2Deg;
-                    Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-                    crossbow.transform.rotation = rotation;
+                    if (MobileScript.isMobile == false)
+                    {
+                        crossbowDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                        float angle = Mathf.Atan2(crossbowDir.y, crossbowDir.x) * Mathf.Rad2Deg;
+                        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+                        crossbow.transform.rotation = rotation;
+                    }
                 }
             }
             #endregion
@@ -279,28 +284,13 @@ public class MainButtonCollider : MonoBehaviour
         #region invincibilityAbility
         if(Choises.choseInvincibility == true)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if(MobileScript.isMobile == false)
             {
-                if(Choises.invincibilityTimer > 0)
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    if(Choises.isPaused == false)
-                    {
-                        invincibilityObject.SetActive(true);
-                        if (startTimer == false)
-                        {
-                            invCoroutine = StartCoroutine(InvinAbility()); 
-                            audioManager.Play("invinIn"); 
-                        }
-                        else
-                        {
-                            Choises.buttonHealth = currentHealth;
-                            isInvincibilityActive = false;
-                            if (invCoroutine != null) { StopCoroutine(invCoroutine); invCoroutine = null; }
-                            audioManager.Play("invinOut");
-                            startTimer = false;
-                            invincibilityObject.SetActive(false);
-                        }
-                    }
+                    InvinClick();
+
+                  
                 }
             }
         }
@@ -309,26 +299,53 @@ public class MainButtonCollider : MonoBehaviour
         #region controllable button
         if(Choises.chooseControllableButton == true && SettingsOptions.isInSettings == false && Choises.isInMainManu == false)
         {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
+            if(MobileScript.isMobile == false)
+            {
+                float horizontalInput = Input.GetAxis("Horizontal");
+                float verticalInput = Input.GetAxis("Vertical");
 
-            // Calculate the movement direction
-            Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
+                // Calculate the movement direction
+                Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
 
-            // Move the player
-            transform.Translate(movement * buttonMoveSpeed * Time.deltaTime);
+                // Move the player
+                transform.Translate(movement * buttonMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                Vector2 movement = virtualJoystick.inputDirection;
+
+                // Move the player
+                transform.Translate(movement * buttonMoveSpeed * Time.deltaTime);
+            }
         }
         #endregion
 
         #region rocket movement
         if (Choises.chooseRocket == true && SettingsOptions.isInSettings == false && Choises.isInMainManu == false)
         {
-            if (Input.GetKey(KeyCode.A)) { rocket.transform.Rotate(Vector3.forward * rocketRotationSpeed * Time.deltaTime); }
-            if (Input.GetKey(KeyCode.D)) { rocket.transform.Rotate(Vector3.forward * -rocketRotationSpeed * Time.deltaTime); }
-
-            if (Input.GetKey(KeyCode.LeftControl))
+            if(MobileScript.isMobile == false)
             {
-                if (isRocketSound == false) { audioManager.Play("rocket"); isRocketSound = true; }
+                if (Input.GetKey(KeyCode.A)) { rocket.transform.Rotate(Vector3.forward * rocketRotationSpeed * Time.deltaTime); }
+                if (Input.GetKey(KeyCode.D)) { rocket.transform.Rotate(Vector3.forward * -rocketRotationSpeed * Time.deltaTime); }
+            }
+            else
+            {
+                Vector2 direction = virtualJoystick.inputDirection;
+
+                if (direction != Vector2.zero)
+                {
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                    rocket.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+                }
+            }
+
+            if (Input.GetKey(KeyCode.LeftControl) || MobileBtnPress.holdingDown == true)
+            {
+                if(MobileScript.isMobile == false)
+                {
+                    if (isRocketSound == false) { audioManager.Play("rocket"); isRocketSound = true; }
+                }
 
                 if (rocketChargeCoroutine == null)
                 {
@@ -378,9 +395,74 @@ public class MainButtonCollider : MonoBehaviour
         }
     }
 
+    #region Booster
+    public void Booster(bool charing)
+    {
+        if(charing == true)
+        {
+            if (chargeNeeded > 0f)
+            {
+                //Debug.Log(chargeNeeded);
+                smallButton.transform.Rotate(Vector3.forward * speed2 * Time.deltaTime);
+            }
+            else { smallButton.transform.Rotate(Vector3.forward * speed * Time.deltaTime); }
+
+            if (chargeCoroutine == null)
+            {
+                ChargeSmallButton();
+            }
+        }
+        else
+        {
+            smallButton.transform.Rotate(Vector3.forward * speed * Time.deltaTime);
+
+            if (chargeCoroutine != null)
+            {
+                if (chargeForce > 0) { ApplyOppositeForce(); }
+                StopCoroutine(chargeCoroutine);
+                charge = 0f;
+                chargeForce = 0f;
+                chargeNeeded = 0f;
+                chargeObject.transform.localScale = new Vector3(0, 0, 0);
+                chargeCoroutine = null;
+            }
+        }
+    }
+    #endregion
+
+    #region Invin click
+    public void InvinClick()
+    {
+        if (Choises.invincibilityTimer > 0)
+        {
+            if (Choises.isPaused == false)
+            {
+                invincibilityObject.SetActive(true);
+                if (startTimer == false)
+                {
+                    invCoroutine = StartCoroutine(InvinAbility());
+                    audioManager.Play("invinIn");
+                }
+                else
+                {
+                    Choises.buttonHealth = currentHealth;
+                    isInvincibilityActive = false;
+                    if (invCoroutine != null) { StopCoroutine(invCoroutine); invCoroutine = null; }
+                    audioManager.Play("invinOut");
+                    startTimer = false;
+                    invincibilityObject.SetActive(false);
+                }
+            }
+        }
+    }
+    #endregion
+
+    public JoystickMechanics virtualJoystick;
+
     public AudioManager audioManager;
 
     public GameObject rocketFire;
+
     #region Reset Charge And Rocket And boxing glove
     public void StopRocketAndBooster()
     {
@@ -556,11 +638,33 @@ public class MainButtonCollider : MonoBehaviour
 
         if (activeEnemies.Count > 0)
         {
-            enemyTargetArrayPos = Random.Range(0, activeEnemies.Count);
-            GameObject randomEnemy = activeEnemies[enemyTargetArrayPos];
+            GameObject randomEnemy = null;
 
-            // Debug the name of the random enemy
-            //Debug.Log("Random Active Enemy Name: " + randomEnemy.name);
+            if (MobileScript.isMobile == true)
+            {
+                if (MimicEnding.isPlayingChamptions == true)
+                {
+                    if (MimicEnding.championsKilled != 2)
+                    {
+                        do
+                        {
+                            enemyTargetArrayPos = Random.Range(0, activeEnemies.Count);
+                            randomEnemy = activeEnemies[enemyTargetArrayPos];
+
+                        } while (randomEnemy.name == "Champion3Armored");
+                    }
+                }
+                else
+                {
+                     enemyTargetArrayPos = Random.Range(0, activeEnemies.Count);
+                     randomEnemy = activeEnemies[enemyTargetArrayPos];
+                }
+            }
+            else
+            {
+                enemyTargetArrayPos = Random.Range(0, activeEnemies.Count);
+                randomEnemy = activeEnemies[enemyTargetArrayPos];
+            }
 
             return randomEnemy;
         }
@@ -685,19 +789,22 @@ public class MainButtonCollider : MonoBehaviour
     {
         currentHealth = Choises.buttonHealth;
         startTimer = true;
+
         float timer = Choises.invincibilityTimer;
 
         while (timer > 0f)
         {
             isInvincibilityActive = true;
 
-            // Update countdown text with decimal points
             countdownText.text = timer.ToString("F2");
 
-            yield return new WaitForSeconds(0.01f);
+            yield return null; 
 
-            timer -= 0.01f; // Decrease the timer by the interval
-            Choises.invincibilityTimer -= 0.01f;
+            float deltaTime = Time.deltaTime;
+            timer -= deltaTime;
+            Choises.invincibilityTimer -= deltaTime;
+
+            timer = Mathf.Max(timer, 0f);
         }
 
         audioManager.Play("invinOut");
@@ -902,19 +1009,39 @@ public class MainButtonCollider : MonoBehaviour
         {
             yield return new WaitForSeconds(0.12f);
 
-            rocketFire.SetActive(true);
+            if(MobileScript.isMobile == true) 
+            {
+                if (charge > 0.025) { rocketFire.SetActive(true); } if (isRocketSound == false) { audioManager.Play("rocket"); isRocketSound = true; }
+            }
+            else
+            {
+                rocketFire.SetActive(true);
+            }
 
             if (charge < 0.9f)
             {
                 rocketForce += 0.23f;
                 charge += 0.012f;
-                //Debug.Log(charge);
 
-                Vector2 rotationDirection = rocket.GetComponent<Transform>().up;
+                if (MobileScript.isMobile == true)
+                {
+                    if (charge > 0.025)
+                    {
+                        Vector2 rotationDirection = rocket.GetComponent<Transform>().up;
 
-                Vector2 oppositeForce = -rotationDirection.normalized * rocketForce;
+                        Vector2 oppositeForce = -rotationDirection.normalized * rocketForce;
 
-                buttonRB.AddForce(oppositeForce, ForceMode2D.Impulse);
+                        buttonRB.AddForce(oppositeForce, ForceMode2D.Impulse);
+                    }
+                }
+                else
+                {
+                    Vector2 rotationDirection = rocket.GetComponent<Transform>().up;
+
+                    Vector2 oppositeForce = -rotationDirection.normalized * rocketForce;
+
+                    buttonRB.AddForce(oppositeForce, ForceMode2D.Impulse);
+                }
             }
             else
             {
@@ -927,10 +1054,36 @@ public class MainButtonCollider : MonoBehaviour
     #endregion
 
     #region Shoot Pistol
+    private Transform pistolTarget;
+    public GameObject randomPistolEnemy;
+    public int timesClicked;
+
     public void ShootPistol()
     {
-        gun1Direction = pistolDir.normalized;
-        if (isPistolReady == true) { knockBackCoroutine = StartCoroutine(ShootGun(gun1, 1, gun1Direction, 32)); }
+        if(MobileScript.isMobile == true) 
+        {
+            if(timesClicked == 1)
+            {
+                if (randomPistolEnemy == null) { randomPistolEnemy = GetRandomActiveEnemy(enemies); }
+                else { if (randomPistolEnemy.activeInHierarchy == false) { randomPistolEnemy = GetRandomActiveEnemy(enemies); } }
+            }
+            else { randomPistolEnemy = GetRandomActiveEnemy(enemies); }
+
+            if (randomPistolEnemy == null) { return; }
+            else { timesClicked = 1; }
+           
+            pistolTarget = randomPistolEnemy.transform;
+            Vector2 direction = randomPistolEnemy.transform.position - gun1.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            gun1.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            gun1Direction = direction.normalized;
+        }
+        else
+        {
+            gun1Direction = pistolDir.normalized;
+        }
+
+        if (isPistolReady == true && MobileScript.isMobile == false) { knockBackCoroutine = StartCoroutine(ShootGun(gun1, 1, gun1Direction, 32)); }
 
         int random = Random.Range(1, 6);
         if (random == 1) { audioManager.Play("Pistol1"); }
@@ -941,9 +1094,7 @@ public class MainButtonCollider : MonoBehaviour
 
         GameObject gunBullet = ObjectPool.instance.GetBulletGun1FromPool();
         gunBullet.transform.localScale = new Vector2(ObjectPool.pistolBulletSize, ObjectPool.pistolBulletSize);
-
         gunBullet.transform.position = gunBulletPos.transform.position;
-
         Rigidbody2D rb = gunBullet.GetComponent<Rigidbody2D>();
 
         rb.velocity = gun1Direction * Choises.bulletGun1_Speed;
@@ -965,29 +1116,44 @@ public class MainButtonCollider : MonoBehaviour
 
     public void ShootShotgun()
     {
-        gun2Direction = shotgunDir.normalized;
-        int random = Random.Range(1, 3);
-        if (random == 1) { audioManager.Play("Shotgun1"); }
-        if (random == 2) { audioManager.Play("Shotgun2"); }
+        GameObject closestEnemy = null;
 
-        if (isShotgunReady == true) { knockBackCoroutine = StartCoroutine(ShootGun(gun2, 2, gun2Direction, 45)); }
+        if (MobileScript.isMobile == true)
+        {
+             closestEnemy = FindClosestActiveEnemy(enemies);
+            if (closestEnemy == null) { return; }
+        }
+        else { gun2Direction = shotgunDir.normalized; }
+
+        if (isShotgunReady == true && MobileScript.isMobile == false) { knockBackCoroutine = StartCoroutine(ShootGun(gun2, 2, gun2Direction, 45)); }
 
         for (int i = 0; i < Choises.shotGunBullets; i++)
         {
-            GameObject shotGunBullet = ObjectPool.instance.GetShotgunBullletFromPool();
+            if (MobileScript.isMobile == true) {
+                
+                Vector2 direction = closestEnemy.transform.position - gun2.transform.position;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                gun2.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                gun2Direction = direction.normalized;
+            }
 
+            //Gets the shotgun shots
+            GameObject shotGunBullet = ObjectPool.instance.GetShotgunBullletFromPool();
             float randomSize = Random.Range(0.35f, 0.55f);
             float randomSpeed = Random.Range(Choises.shotGunBulletSpeed1, Choises.shotGunBulletSpeed2);
-
             shotGunBullet.transform.position = shotgunBulletStartingPos.transform.position;
             shotGunBullet.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
-
             Rigidbody2D rb = shotGunBullet.GetComponent<Rigidbody2D>();
 
+            //Spread
             float randomAngle = Random.Range(-12, 12); // Adjust spreadAngleRange to control randomness
             Vector2 randomDirection = Quaternion.Euler(0, 0, randomAngle) * gun2Direction;
 
             rb.velocity = randomDirection.normalized * randomSpeed;
+
+            int random = Random.Range(1, 3);
+            if (random == 1) { audioManager.Play("Shotgun1"); }
+            if (random == 2) { audioManager.Play("Shotgun2"); }
 
             StartCoroutine(ShotgunBullet(shotGunBullet));
         }
@@ -1002,10 +1168,36 @@ public class MainButtonCollider : MonoBehaviour
     #endregion
 
     #region shootBulletFromMp4
+    public GameObject targetMp4Enemy;
+    public int timesMp4Clicked;
+    private Transform mp4Target;
+
     public void ShootMp4()
     {
-        gun3Direction = mp4Dir.normalized;
-        if (isMp4Ready == true) { knockBackCoroutine = StartCoroutine(ShootGun(gun3, 3, gun3Direction, 25)); }
+        if (MobileScript.isMobile == true)
+        {
+            if (timesMp4Clicked == 1)
+            {
+                if (targetMp4Enemy == null) { targetMp4Enemy = GetRandomActiveEnemy(enemies); }
+                else { if (targetMp4Enemy.activeInHierarchy == false) { targetMp4Enemy = GetRandomActiveEnemy(enemies); } }
+            }
+            else { targetMp4Enemy = GetRandomActiveEnemy(enemies); }
+
+            if (targetMp4Enemy == null) { return; }
+            else { timesMp4Clicked = 1; }
+
+            mp4Target = targetMp4Enemy.transform;
+            Vector2 direction = targetMp4Enemy.transform.position - gun3.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            gun3.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            gun3Direction = direction.normalized;
+        }
+        else
+        {
+            gun3Direction = mp4Dir.normalized;
+        }
+    
+        if (isMp4Ready == true && MobileScript.isMobile == false) { knockBackCoroutine = StartCoroutine(ShootGun(gun3, 3, gun3Direction, 25)); }
 
         int random = Random.Range(1, 5);
         if (random == 1) { audioManager.Play("Mp1"); }
@@ -1033,16 +1225,39 @@ public class MainButtonCollider : MonoBehaviour
     #endregion
 
     #region shoot crossbow
+    public GameObject targetCrossbowEnemy;
+    public int timesCrossbowClicked;
+    private Transform crossbowTarget;
+
     public void ShootCrossbow()
     {
-        gun4Direction = crossbowDir.normalized;
+        if (MobileScript.isMobile == true)
+        {
+            if (timesCrossbowClicked == 1)
+            {
+                if (targetCrossbowEnemy == null) { targetCrossbowEnemy = GetRandomActiveEnemy(enemies); }
+                else { if (targetCrossbowEnemy.activeInHierarchy == false) { targetCrossbowEnemy = GetRandomActiveEnemy(enemies); } }
+            }
+            else { targetCrossbowEnemy = GetRandomActiveEnemy(enemies); }
+
+            if (targetCrossbowEnemy == null) { return; }
+            else { timesCrossbowClicked = 1; }
+
+            crossbowTarget = targetCrossbowEnemy.transform;
+            Vector2 direction = targetCrossbowEnemy.transform.position - crossbow.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            crossbow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            gun4Direction = direction.normalized;
+        }
+        else
+        {
+            gun4Direction = crossbowDir.normalized;
+        }
        
-        if (isCrossbowReady == true) { knockBackCoroutine = StartCoroutine(ShootGun(crossbow, 4, gun4Direction, 40)); }
+        if (isCrossbowReady == true && MobileScript.isMobile == false) { knockBackCoroutine = StartCoroutine(ShootGun(crossbow, 4, gun4Direction, 40)); }
 
         audioManager.Play("Crossbow");
         GameObject crossbowArrow = ObjectPool.instance.GetCrossbowArrowFromPool();
-
-       
 
         Rigidbody2D rb = crossbowArrow.GetComponent<Rigidbody2D>();
         boltIcon.SetActive(false);

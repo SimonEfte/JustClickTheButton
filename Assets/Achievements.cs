@@ -53,8 +53,6 @@ public class Achievements : MonoBehaviour, IDataPersistence
     public AudioManager audioManager;
     public void Awake()
     {
-        //AchClear("");
-
         #region All ach and unlock amount
         totalCritACHAmount = 1000;
         speedrunnerAchTime = 20;
@@ -744,18 +742,18 @@ public class Achievements : MonoBehaviour, IDataPersistence
     public void AchTrigger(string achID)
     {
         if(Steam.noSteamInt == true) { return; }
-       
-        var ach = new Steamworks.Data.Achievement(achID);
-        if (ach.State == false)
-        { 
-            ach.Trigger();
-        }
+
+        //var ach = new Steamworks.Data.Achievement(achID);
+        // if (ach.State == false)
+        //{
+        //ach.Trigger();
+        //   }
     }
 
     public void AchClear(string achID)
     {
-        var ach = new Steamworks.Data.Achievement(achID);
-        ach.Clear();
+        //var ach = new Steamworks.Data.Achievement(achID);
+        //  ach.Clear();
     }
     #endregion
 

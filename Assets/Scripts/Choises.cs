@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Advertisements;
 
 public class Choises : MonoBehaviour, IDataPersistence
 {
@@ -59,6 +60,8 @@ public class Choises : MonoBehaviour, IDataPersistence
 
     public AudioManager audioManager;
 
+    public static Choises Instance { get; private set; }
+
     public void Awake()
     {
         levelToFirstEnding = 75;
@@ -72,6 +75,8 @@ public class Choises : MonoBehaviour, IDataPersistence
 
     public void Start()
     {
+        totalLevelForAds = 15;
+
         mainCamera.GetComponent<Animator>().enabled = false;
         //ButtonClick.level = 49;
 
@@ -491,6 +496,7 @@ public class Choises : MonoBehaviour, IDataPersistence
     IEnumerator RestartRunTransition()
     {
         bossMusicPlaying = false; hordMusicPlaying = false; championsMusicPlaying = false; dangerButtonMusicPlaying = false;
+        SettingsOptions.isMobileSettingBTN = true;
         SetOriginalChances();
         rerollButton.SetActive(false);
         SettingsOptions.isInSettings = false;
@@ -609,6 +615,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         mainMenu.SetActive(false);
         isInMainManu = false;
         isInDeathScreen = false;
+        if(MobileScript.isMobile == true) { SettingsOptions.isMobileSettingBTN = true; }
         mainCamera.GetComponent<Animator>().enabled = false;
         dataScript.SaveTheGameData();
     }
@@ -687,6 +694,9 @@ public class Choises : MonoBehaviour, IDataPersistence
         mimicSlider.SetActive(false);
 
         hordeSlider.SetActive(false);
+        wave1.SetActive(false);
+        wave2.SetActive(false);
+        wave3.SetActive(false);
 
         bossPieces.SetActive(false);
         bossArena.SetActive(false);
@@ -704,6 +714,8 @@ public class Choises : MonoBehaviour, IDataPersistence
     public Button saveButton;
     public MainButtonCollider mainButtonColliderScript;
     public static bool isInLevelUpScreen;
+
+    public static int totalLevelForAds, levelupsForAds;
 
     void Update()
     {
@@ -823,7 +835,6 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             if(isInDeathScreen == false)
             {
-               
                 CheckSoundsPlaying();
 
                 chose1Mythic = false; chose2Mythic = false; chose3Mythic = false; chose4Mythic = false; chose5Mythic = false;
@@ -866,6 +877,11 @@ public class Choises : MonoBehaviour, IDataPersistence
             if(isInDeathScreen == false)
             {
                 if (MobileScript.isMobile == false) { aimCursor.SetActive(true); }
+                else
+                {
+                    levelupsForAds += 1;
+                }
+
                 Cursor.visible = true;
                 SetEnemyPoints(1);
                 if (ButtonClick.level == levelToFirstEnding) { abilititesTotalWaitTime = 1.6f; }
@@ -877,7 +893,6 @@ public class Choises : MonoBehaviour, IDataPersistence
                 levelUpText.SetActive(true);
                 levelUpText.GetComponent<Animator>().SetTrigger("PopUP");
                 if (SettingsOptions.disableParticleEffects == 0) { LevelUpParticle.Play(); }
-                //choisePupUp.SetActive(true);
 
                 PauseGame();
                 ButtonClick.leveledUp = false;
@@ -1221,23 +1236,46 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             abilititesTotalWaitTime = 1.1f;
             choiseScale = 0.95f;
-            choise1Xpos = -550; choise2Xpos = 0; choise3Xpos = 550;
+
+            if(MobileScript.isMobile == false) { choise1Xpos = -550; choise2Xpos = 0; choise3Xpos = 550; }
+            else { choise1Xpos = -515; choise2Xpos = 0; choise3Xpos = 515; }
+
             RandomChoises(); RandomChoises(); RandomChoises();
         }
 
         if (numberOfChoises == 4)
         {
             abilititesTotalWaitTime = 1.35f;
-            choiseScale = 0.95f;
-            choise1Xpos = -635; choise2Xpos = -213; choise3Xpos = 213; choise4Xpos = 635;
+
+            if (MobileScript.isMobile == false)
+            {
+                choiseScale = 0.95f;
+                choise1Xpos = -635; choise2Xpos = -213; choise3Xpos = 213; choise4Xpos = 635;
+            }
+            else 
+            {
+                choiseScale = 0.89f;
+                choise1Xpos = -532; choise2Xpos = -178; choise3Xpos = 178; choise4Xpos = 532;
+            }
             RandomChoises(); RandomChoises(); RandomChoises(); RandomChoises();
         }
 
         if (numberOfChoises == 5)
         {
             abilititesTotalWaitTime = 1.6f;
-            choiseScale = 0.84f;
-            choise1Xpos = -646; choise2Xpos = -323; choise3Xpos = 0; choise4Xpos = 323; choise5Xpos = 646;
+
+            if (MobileScript.isMobile == false)
+            {
+                choiseScale = 0.84f;
+                choise1Xpos = -646; choise2Xpos = -323; choise3Xpos = 0; choise4Xpos = 323; choise5Xpos = 646;
+            }
+            else
+            {
+                choiseScale = 0.74f;
+                choise1Xpos = -564; choise2Xpos = -282; choise3Xpos = 0; choise4Xpos = 282; choise5Xpos = 564;
+            }
+
+           
             RandomChoises(); RandomChoises(); RandomChoises(); RandomChoises(); RandomChoises();
         }
     }
@@ -1481,7 +1519,15 @@ public class Choises : MonoBehaviour, IDataPersistence
             pickTalariaForEnding = true;
             endingTalariaIcon.SetActive(true); endingTalariaYesButton.SetActive(false); endingTalariaNoButton.SetActive(false); talariaCheckmark.SetActive(true);
             talariaCross.SetActive(false);
-            noMovementGiveTalariaText.text = "<color=green>You do not have any movement abilities. You will be given the \"TALARIA.\" Controll the button using WASD.\n ";
+
+            if(MobileScript.isMobile == false)
+            {
+                noMovementGiveTalariaText.text = "<color=green>You do not have any movement abilities. You will be given the \"TALARIA.\" Controll the button using WASD.\n ";
+            }
+            else
+            {
+                noMovementGiveTalariaText.text = "<size=8.6><color=green>You do not have any movement abilities. You will be given the \"TALARIA.\" Controll the button using the joystick that appears in the bottom left.";
+            }
         }
         if (movementAbilityAquaried == true && chooseControllableButton == false)
         {
@@ -1489,9 +1535,18 @@ public class Choises : MonoBehaviour, IDataPersistence
             endingTalariaIcon.SetActive(true); endingTalariaYesButton.SetActive(true); endingTalariaNoButton.SetActive(true); talariaCheckmark.SetActive(false);
             talariaCross.SetActive(true);
 
-            if (choseButtonBounceCharge == true) { noMovementGiveTalariaText.text = "<color=green>You have the Booster movement ability. Would you like the \"TALARIA\" instead for this ending? You controll the button with WASD."; }
+            if (MobileScript.isMobile == false)
+            {
+                if (choseButtonBounceCharge == true) { noMovementGiveTalariaText.text = "<color=green>You have the Booster movement ability. Would you like the \"TALARIA\" instead for this ending? You controll the button with WASD."; }
 
-            if (chooseRocket == true) { noMovementGiveTalariaText.text = "<color=green>You have the Rocket movement ability. Would you like the \"TALARIA\" instead for this ending? You controll the button with WASD."; }
+                if (chooseRocket == true) { noMovementGiveTalariaText.text = "<color=green>You have the Rocket movement ability. Would you like the \"TALARIA\" instead for this ending? You controll the button with WASD."; }
+            }
+            else
+            {
+                if (choseButtonBounceCharge == true) { noMovementGiveTalariaText.text = "<size=8.2><color=green>You have the Booster movement ability. Would you like the \"TALARIA\" instead for this ending? You controll the button with the joystick that appears in the bottom left."; }
+
+                if (chooseRocket == true) { noMovementGiveTalariaText.text = "<size=8.2><color=green>You have the Rocket movement ability. Would you like the \"TALARIA\" instead for this ending? You controll the button with the joystick that appears in the bottom left."; }
+            }
         }
         if (chooseControllableButton == true)
         {
@@ -1507,7 +1562,7 @@ public class Choises : MonoBehaviour, IDataPersistence
     public static bool isEndingTransition;
     public GameObject mainArena, bossObject, bossArena, bossHEalthBar, mainXPBar;
     public GameObject dangerButtonArena, dangerButtonTimerSlider, dangerButtonObject;
-    public GameObject hordeSlider;
+    public GameObject hordeSlider, wave1, wave2, wave3;
     public Camera mainCamera;
     public GameObject bossTextBubble;
     public GameObject mainButton;
@@ -1588,6 +1643,10 @@ public class Choises : MonoBehaviour, IDataPersistence
             StartCoroutine(WaitForHordeAnim());
             HordeEnding.setHordeCamera = true;
             hordeSlider.SetActive(true);
+            wave1.SetActive(true);
+            wave2.SetActive(true);
+            wave3.SetActive(true);
+
             StartCoroutine(SetCircleTransition(true, 0.5f));
         }
         if (choosingMimic == true)
@@ -2484,16 +2543,45 @@ public class Choises : MonoBehaviour, IDataPersistence
 
         if (numberOfChoises == 3)
         {
-            yield return new WaitForSecondsRealtime(0.8f);
+            yield return new WaitForSecondsRealtime(0.82f);
         }
         if (numberOfChoises == 4)
         {
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(1.02f);
         }
         if (numberOfChoises == 5)
         {
-            yield return new WaitForSecondsRealtime(1.2f);
+            yield return new WaitForSecondsRealtime(1.22f);
         }
+
+        if(MobileScript.isMobile == true)
+        {
+            if (levelupsForAds >= totalLevelForAds)
+            {
+                levelupsForAds = 0;
+                if(InAppPurchase.isAdsRemoved == false && InAppPurchase.isAdsRemovedPlayerprefs == 0)
+                {
+                    if(ButtonClick.level != 75)
+                    {
+                        if (numberOfChoises == 3)
+                        {
+                            yield return new WaitForSecondsRealtime(0.25f);
+                        }
+                        if (numberOfChoises == 4)
+                        {
+                            yield return new WaitForSecondsRealtime(0.32f);
+                        }
+                        if (numberOfChoises == 5)
+                        {
+                            yield return new WaitForSecondsRealtime(0.42f);
+                        }
+
+                        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+                    }
+                }
+            }
+        }
+
         blockAbilititesObject.SetActive(false);
     }
     #endregion
@@ -3371,7 +3459,6 @@ public class Choises : MonoBehaviour, IDataPersistence
             rerollDiceObject.GetComponent<Button>().interactable = false;
             rerollButtonObject.GetComponent<Animator>().SetTrigger("Out");
         }
-
      
         chose1Mythic = false; chose2Mythic = false; chose3Mythic = false; chose4Mythic = false; chose5Mythic = false;
 
@@ -3457,7 +3544,10 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             Cursor.visible = true;
         }
-        else { Cursor.visible = false; }
+        else 
+        {
+            if (MobileScript.isMobile == false) { Cursor.visible = false; }
+        }
     }
 
     IEnumerator SetFirstGunScreen()
@@ -3539,8 +3629,6 @@ public class Choises : MonoBehaviour, IDataPersistence
         choseHealthBar = true;
         setEnemiesInactive = true;
 
-        //UnPauseGame();
-       
         //Set to false
         if (firstTimeGun == false) { 
             SetAlpha(firstTimeGunScreen.GetComponent<Image>(), 0f);
@@ -4177,8 +4265,17 @@ public class Choises : MonoBehaviour, IDataPersistence
 
             pistolClicks = 0;
             pistolClicksNeeded = 3;
-            bulletGun1_Damage = 9;
-            bulletGun1_Speed = 65;
+            if(MobileScript.isMobile == false)
+            {
+                bulletGun1_Damage = 9;
+                bulletGun1_Speed = 65;
+            }
+            else
+            {
+                bulletGun1_Damage = 6;
+                bulletGun1_Speed = 75;
+            }
+          
             localizationScript.PistolText();
         }
         else
@@ -4272,7 +4369,9 @@ public class Choises : MonoBehaviour, IDataPersistence
             shotgunDamageIncrease = 0; shotgunSpeedIncrease = 0;
             shotgunShotsIncrease = 0;
 
-              shotGunBulletDamage = 6; shotGunBulletDamage2 = 8;
+            if(MobileScript.isMobile == false) { shotGunBulletDamage = 6; shotGunBulletDamage2 = 8; }
+            else { shotGunBulletDamage = 4; shotGunBulletDamage2 = 6; }
+
             shotGunBulletSpeed1 = 50; shotGunBulletSpeed2 = 70;
             shotGunBullets = 10;
             shotGunClicks = 0;
@@ -4370,8 +4469,18 @@ public class Choises : MonoBehaviour, IDataPersistence
             mp4DamageIncrease = 0; mp4SpeedIncrease = 0;
 
             mp4Clicks = 0;
-            mp4Damage = 8;
-            mp4Speed = 55;
+
+            if(MobileScript.isMobile == false)
+            {
+                mp4Damage = 8;
+                mp4Speed = 55;
+            }
+            else
+            {
+                mp4Damage = 6;
+                mp4Speed = 65;
+            }
+          
             mp4ClicksNeeded = 2;
 
             localizationScript.Mp4Text();
@@ -4463,8 +4572,17 @@ public class Choises : MonoBehaviour, IDataPersistence
             crossbowCommonDamageIncrease = 0; crossbowCommonSpeedIncrease = 0;
             crossbowDamageIncrease = 0; crossbowSpeedIncrease = 0;
 
-            crossbowDamage = 22;
-            crossbowSpeed = 90;
+            crossbowSpeed = 92;
+
+            if (MobileScript.isMobile == false) 
+            {
+                crossbowDamage = 22;
+            }
+            else
+            {
+                crossbowDamage = 15;
+            }
+
             crossbowClicksNeeded = 4;
 
             localizationScript.CrossbowText();
@@ -4552,8 +4670,18 @@ public class Choises : MonoBehaviour, IDataPersistence
             awpDamageIncrease = 0; awpSpeedIncrease = 0;
 
             homingBulletClicks = 0;
-            homignBulletSpeed = 115;
-            homingBulletDamage = 23;
+
+            if(MobileScript.isMobile == false)
+            {
+                homignBulletSpeed = 115;
+                homingBulletDamage = 23;
+            }
+            else
+            {
+                homignBulletSpeed = 120;
+                homingBulletDamage = 20;
+            }
+
             clicksPerHomingBullet = 5;
 
             localizationScript.AwpText();
@@ -4636,9 +4764,19 @@ public class Choises : MonoBehaviour, IDataPersistence
             deagleCommonDamageIncrease = 0; deagleCommonSpeedIncrease = 0;
             deagleDamageIncrease = 0; deagleSpeedIncrease = 0;
 
+            if (MobileScript.isMobile == false)
+            {
+                trippleShotDamage = 7;
+                trippleShotSpeed = 70;
+            }
+            else
+            {
+                trippleShotDamage = 5;
+                trippleShotSpeed = 60;
+            }
+
             trippleShotClick = 0;
-            trippleShotDamage = 7;
-            trippleShotSpeed = 70;
+           
             trippleShotNeeded = 3;
 
             localizationScript.DeagleText();
@@ -4890,7 +5028,6 @@ public class Choises : MonoBehaviour, IDataPersistence
         }
         else
         {
-           
             IncreaseMaxEnemyspawn(3, 2, 1, 1, 0, 0, 0, 0);
 
             eggChargedBullet.SetActive(true);
@@ -4902,7 +5039,15 @@ public class Choises : MonoBehaviour, IDataPersistence
 
             maxButtonCharge = 35;
             buttonChargePerSecond = 1f;
-            chargedBulletChargeTime = 5;
+
+            if (MobileScript.isMobile == false)
+            {
+                chargedBulletChargeTime = 5;
+            }
+            else
+            {
+                chargedBulletChargeTime = 4;
+            }
         }
 
       
@@ -4917,8 +5062,17 @@ public class Choises : MonoBehaviour, IDataPersistence
             chargedBulletcommonMaxDamageIncrease = 0; chargedBulletcommonChargeTimeIncrease = 0;
             chargedBulletMaxDamageIncrease = 0; chargedBulletChargeTimeIncrease = 0;
 
-            chargedBulletMaxDamage = 12;
-            chargedBulletChargeTime = 5;
+            if(MobileScript.isMobile == false)
+            {
+                chargedBulletMaxDamage = 12;
+                chargedBulletChargeTime = 5;
+            }
+            else
+            {
+                chargedBulletMaxDamage = 18;
+                chargedBulletChargeTime = 4;
+            }
+
             chargedBulletsCount = 15;
 
             localizationScript.ChargedBulletsText();
@@ -6119,7 +6273,6 @@ public class Choises : MonoBehaviour, IDataPersistence
         SetEnemyStats(31, false);
         ChoseMythicSetChance();
         movementAbilityAquaried = true;
-       
 
         chooseControllableButton = true;
         UnPauseGame();
@@ -6884,7 +7037,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         UnPauseGame();
         if(firstControlledGun == true)
         { 
-            Cursor.visible = false; 
+            if(MobileScript.isMobile == false) { Cursor.visible = false; }
         }
         else
         {
@@ -7916,7 +8069,10 @@ public class Choises : MonoBehaviour, IDataPersistence
             {
                 Cursor.visible = true;
             }
-            else { Cursor.visible = false; }
+            else 
+            {
+                if (MobileScript.isMobile == false) { Cursor.visible = false; }
+            }
         }
     }
     #endregion

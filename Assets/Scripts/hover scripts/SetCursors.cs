@@ -11,15 +11,21 @@ public class SetCursors : MonoBehaviour
     {
         if(hoveringClickableStuff == true)
         {
-            aimCursor.SetActive(false);
-            clickableCursor.SetActive(true);
-            clickableCursor.transform.position = Input.mousePosition;
+            if(MobileScript.isMobile == false)
+            {
+                aimCursor.SetActive(false);
+                clickableCursor.SetActive(true);
+                clickableCursor.transform.position = Input.mousePosition;
+            }
         }
         else
         {
             if(Choises.isInMainManu == false && SettingsOptions.isInSettings == false && Choises.isInDeathScreen == false && Choises.firstControlledGun == true && Choises.isPaused == false)
             {
-                if(Cursor.visible == true) { Cursor.visible = false;  }
+                if(Cursor.visible == true) 
+                { 
+                    if(MobileScript.isMobile == false) { Cursor.visible = false; }
+                }
 
                 if(MobileScript.isMobile == false)
                 {

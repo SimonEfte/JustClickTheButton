@@ -113,24 +113,27 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    if (SettingsOptions.isInSettings == false && Choises.isInWinScreen == false && Choises.isInDeathScreen == false && Choises.isInChooseEndingScreen == false && Choises.isInEggScreen == false && Choises.isInLevelUpScreen == false && Choises.isInMainManu == false)
+                    if (SettingsOptions.isInSettings == false && Choises.isInWinScreen == false && Choises.isInDeathScreen == false && Choises.isInChooseEndingScreen == false && Choises.isInEggScreen == false && Choises.isInLevelUpScreen == false && Choises.isInMainManu == false && Choises.isInFirstWeaponScreen == false)
                     {
-                        ButtonClickInNoises();
+                        if (MobileScript.isMobile == false) { ButtonClickInNoises(); }
                     }
                 }
                 if (Input.GetKeyUp(KeyCode.Mouse0))
                 {
-                    if (SettingsOptions.isInSettings == false && Choises.isInWinScreen == false && Choises.isInDeathScreen == false && Choises.isInChooseEndingScreen == false && Choises.isInEggScreen == false && Choises.isInLevelUpScreen == false && Choises.isInMainManu == false)
+                    if (SettingsOptions.isInSettings == false && Choises.isInWinScreen == false && Choises.isInDeathScreen == false && Choises.isInChooseEndingScreen == false && Choises.isInEggScreen == false && Choises.isInLevelUpScreen == false && Choises.isInMainManu == false && Choises.isInFirstWeaponScreen == false)
                     {
-                        ButtonClickOutNoises();
+                        if (MobileScript.isMobile == false) { ButtonClickInNoises(); }
                     }
                 }
 
                 spaceBarPressed = false;
 
-                if (Input.GetKey(KeyCode.Mouse0)) { isPressed = true; }
+                if(MobileScript.isMobile == false)
+                {
+                    if (Input.GetKey(KeyCode.Mouse0)) { isPressed = true; }
 
-                if (!Input.GetKey(KeyCode.Mouse0)) { isPressed = false; }
+                    if (!Input.GetKey(KeyCode.Mouse0)) { isPressed = false; }
+                }
             }
             #endregion
 
@@ -147,7 +150,7 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
             if (Choises.isPaused == false && Choises.isInMainManu == false)
             {
-                if (isPressed == true || spaceBarPressed == true)
+                if (isPressed == true || spaceBarPressed == true || MobileBtnPress.isBtnChargeHoldDown == true || MobileBtnPress.holdingDown == true)
                 {
                     // Scale down the button
                     buttonPressedObject.transform.localScale = new Vector3(originalScale * scaleDownFactor, originalScale * scaleDownFactor, 1f);
@@ -158,7 +161,15 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                         {
                             if (chargeCoroutineVisual == null)
                             {
-                                chargeCoroutineVisual = StartCoroutine(ChargeButtonVisual());
+                                if(MobileScript.isMobile == false) { chargeCoroutineVisual = StartCoroutine(ChargeButtonVisual()); }
+                                else
+                                {
+                                    if(MobileBtnPress.isBtnChargeHoldDown == true)
+                                    {
+                                        chargeCoroutineVisual = StartCoroutine(ChargeButtonVisual());
+                                    }
+                                }
+                               
                             }
 
                             if (chargedAmount >= Choises.maxButtonCharge)
@@ -213,6 +224,7 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     private IEnumerator ChargeButtonVisual()
     {
         float maxScale = 0.8f;
+        float maxShotScale = 3.6f;
         float startTime = Time.time;
 
         while (charge < Choises.chargedBulletChargeTime)
@@ -229,11 +241,10 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 chargedBulletDamage += (Choises.chargedBulletMaxDamage / 100);
                 if(chargedBulletDamage > (Choises.chargedBulletMaxDamage - 1)) { chargedBulletDamage = Choises.chargedBulletMaxDamage; }
 
-               
                 chargedButtonScale += 0.045f;
-                chargedAmount += Choises.buttonChargePerSecond;
-                
+                if (chargeObject.transform.localScale.x >= 0.79f) { chargedButtonScale = maxShotScale; }
 
+                chargedAmount += Choises.buttonChargePerSecond;
 
                 if (Choises.chargedBulletChargeTime < 2)
                 {

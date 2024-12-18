@@ -16,12 +16,11 @@ public class Steam : MonoBehaviour
         {
             try
             {
-                Steamworks.SteamClient.Init(2577760);
-                //Debug.Log(Steamworks.SteamClient.Name);
+                //  Steamworks.SteamClient.Init(2577760);
             }
             catch (System.Exception e)
             {
-                Debug.Log(e);
+                // Debug.Log(e);
             }
         }
     }
@@ -30,7 +29,7 @@ public class Steam : MonoBehaviour
     {
         if (noSteamInt == false)
         {
-            Steamworks.SteamClient.RunCallbacks();
+            // Steamworks.SteamClient.RunCallbacks();
         }
     }
 
@@ -38,7 +37,7 @@ public class Steam : MonoBehaviour
     {
         if (noSteamInt == false)
         {
-            Steamworks.SteamClient.Shutdown();
+            //   Steamworks.SteamClient.Shutdown();
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private bool arrowStuck;
-    private Transform originalParent;
+    public Transform originalParent;
     private Transform enemyParent;
     public GameObject damageManagerObject;
     public bool firstPlay;
@@ -14,10 +14,12 @@ public class Arrow : MonoBehaviour
 
     public void Awake()
     {
+        firstPlay = false;
         foundPrent = false;
         damageManagerObject = GameObject.Find("BulletDamageManager");
         rigidbodyArrow = gameObject.GetComponent<Rigidbody2D>();
         damageManager = damageManagerObject.GetComponent<DamageDealtManager>();
+        originalParent = transform.parent;
     }
 
     public bool foundPrent;
@@ -65,7 +67,10 @@ public class Arrow : MonoBehaviour
         rigidbodyArrow.constraints = RigidbodyConstraints2D.None;
         arrowStuck = false;
        
-        Invoke("Set", 1f);
+        if(firstPlay == false)
+        {
+            Invoke("Set", 1f);
+        }
     }
 
     public void Set()

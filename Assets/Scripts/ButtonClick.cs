@@ -94,7 +94,7 @@ public class ButtonClick : MonoBehaviour, IDataPersistence
             {
                 if (Choises.isPaused == false)
                 {
-                    JustClickTheButton();
+                    if(MobileScript.isMobile == false) { JustClickTheButton(); }
                 }
             }
         }
@@ -105,7 +105,7 @@ public class ButtonClick : MonoBehaviour, IDataPersistence
             {
                 if (Choises.isPaused == false)
                 {
-                    JustClickTheButton();
+                    if (MobileScript.isMobile == false) { JustClickTheButton(); }
                 }
             }
         }
@@ -197,7 +197,6 @@ public class ButtonClick : MonoBehaviour, IDataPersistence
         levelText.text = "LVL " + level;
     }
 
-
     public static bool autoClick;
     public Coroutine idleClicks;
     IEnumerator AutoButtonClick()
@@ -215,7 +214,7 @@ public class ButtonClick : MonoBehaviour, IDataPersistence
 
     public void JustClickTheButton()
     {
-        if (Choises.isInMainManu == false && Choises.isInDeathScreen == false && SettingsOptions.isInSettings == false && Choises.isInWinScreen == false && DangerButtonEnding.isPlayingDangerButton == false && Choises.isInFirstWeaponScreen == false)
+        if (Choises.isInMainManu == false && Choises.isInDeathScreen == false && SettingsOptions.isInSettings == false && Choises.isInWinScreen == false && DangerButtonEnding.isPlayingDangerButton == false && Choises.isInFirstWeaponScreen == false && Choises.isPaused == false && Choises.isBossTransition == false && Choises.isChampionTransition == false)
         {
             AllButtonClickMechanics();
             if (Choises.choseDoubleTap == true) { AllButtonClickMechanics(); }

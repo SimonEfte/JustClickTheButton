@@ -679,7 +679,8 @@ public class HoverUpgrades : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Cursor.visible = false;
+        if(MobileScript.isMobile == false) { Cursor.visible = false; }
+       
         SetCursors.hoveringClickableStuff = true;
         audioManager.Play("hover");
         if (Choises.noHoverGlow == false)
