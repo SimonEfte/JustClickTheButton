@@ -7,7 +7,7 @@ using System;
 public class MobileScript : MonoBehaviour
 {
     public static bool isMobile;
-    public static bool isGooglePlayOut, isAppStoreOut;
+    public static bool isGooglePlayOut, isAppStoreOut, isThisIOS;
 
     public GameObject mobileSettingsBTN;
 
@@ -18,6 +18,7 @@ public class MobileScript : MonoBehaviour
         isMobile = true;
         isGooglePlayOut = false;
         isAppStoreOut = false;
+        isThisIOS = true;
     }
 
     bool isEdiror;
@@ -67,13 +68,13 @@ isEdiror = true;
         {
             if (Input.GetKeyDown(KeyCode.O))
             {
-                ScreenCapture.CaptureScreenshot("screenshot-" + DateTime.Now.ToString("yyyy-mm-dd-hh-sss") + ".png", 1);
+                //ScreenCapture.CaptureScreenshot("screenshot-" + DateTime.Now.ToString("yyyy-mm-dd-hh-sss") + ".png", 1);
             }
         }
         #endregion
 
         #region mobile btns
-        if(isMobile == true)
+        if (isMobile == true)
         {
             if (Choises.choseInvincibility == true) { invinBtn.SetActive(true); }
             else { invinBtn.SetActive(false); }
@@ -187,10 +188,16 @@ isEdiror = true;
 #if UNITY_IOS
         checkOutMoreGamesText.SetActive(true); appStoreBtn.SetActive(true);
 #elif UNITY_ANDROID
-      checkOutMoreGamesText.SetActive(true); googlePlayBtn.SetActive(true); 
+      checkOutMoreGamesText.SetActive(true); googlePlayBtn.SetActive(true);
 #elif UNITY_EDITOR
         checkOutMoreGamesText.SetActive(true); googlePlayBtn.SetActive(true);
 #endif
+
+        if (isThisIOS)
+        {
+            appStoreBtn.SetActive(true);
+            googlePlayBtn.SetActive(false);
+        }
 
         pointAreText.transform.localScale = new Vector2(2.04f, 2.04f);
         settings.transform.localScale = new Vector2(0.83f, 0.83f);
