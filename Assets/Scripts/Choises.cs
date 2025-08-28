@@ -2576,7 +2576,10 @@ public class Choises : MonoBehaviour, IDataPersistence
                             yield return new WaitForSecondsRealtime(0.42f);
                         }
 
-                        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+                        if (MobileScript.isThisIOS == false)
+                        {
+                            AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+                        }
                     }
                 }
             }
@@ -3927,6 +3930,25 @@ public class Choises : MonoBehaviour, IDataPersistence
             else if (timeBetweenClicks < 0.75f) { currentIdleClickIncrease = 0.15f; }
             else if (timeBetweenClicks < 1.1f) { currentIdleClickIncrease = 0.35f; }
             else if (timeBetweenClicks < 3) { currentIdleClickIncrease = 1f; }
+
+            if(MobileScript.isMobile == true)
+            {
+                if (timeBetweenClicks < 0.1f) { currentIdleClickIncrease = 0f; }
+                else if (timeBetweenClicks < 0.12f) { currentIdleClickIncrease = 0.001f; }
+                else if (timeBetweenClicks < 0.14f) { currentIdleClickIncrease = 0.0025f; }
+                else if (timeBetweenClicks < 0.16f) { currentIdleClickIncrease = 0.0055f; }
+                else if (timeBetweenClicks < 0.18f) { currentIdleClickIncrease = 0.008f; }
+                else if (timeBetweenClicks < 0.2f) { currentIdleClickIncrease = 0.02f; }
+                else if (timeBetweenClicks < 0.26f) { currentIdleClickIncrease = 0.03f; }
+                else if (timeBetweenClicks < 0.29f) { currentIdleClickIncrease = 0.04f; }
+                else if (timeBetweenClicks < 0.35f) { currentIdleClickIncrease = 0.06f; }
+                else if (timeBetweenClicks < 0.4f) { currentIdleClickIncrease = 0.08f; }
+                else if (timeBetweenClicks < 0.45f) { currentIdleClickIncrease = 0.1f; }
+                else if (timeBetweenClicks < 0.6f) { currentIdleClickIncrease = 0.15f; }
+                else if (timeBetweenClicks < 0.75f) { currentIdleClickIncrease = 0.25f; }
+                else if (timeBetweenClicks < 1.1f) { currentIdleClickIncrease = 0.45f; }
+                else if (timeBetweenClicks < 3) { currentIdleClickIncrease = 1.15f; }
+            }
 
             if (timeBetweenClicks <= 0 && choseIdleClicking == true)
             {

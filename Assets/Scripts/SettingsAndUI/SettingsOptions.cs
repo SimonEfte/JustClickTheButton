@@ -1173,6 +1173,7 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
             if (Choises.isInFirstWeaponScreen == true || Choises.isInChooseEndingScreen == true || Choises.isInWinScreen == true || Choises.isInDeathScreen == true || Choises.isEndingTransition == true || Choises.isInEggScreen == true)
             {
                 mobileSettingsBTN.SetActive(false);
+            
                 mobileShopBtn.SetActive(false);
             }
             else 
@@ -1187,7 +1188,10 @@ public class SettingsOptions : MonoBehaviour, IDataPersistence
                     }
                     else
                     {
-                        mobileShopBtn.SetActive(true);
+                        if(MobileScript.isThisIOS == false)
+                        {
+                            mobileShopBtn.SetActive(true);
+                        }
                     }
                 }
                 else { mobileSettingsBTN.SetActive(false); mobileShopBtn.SetActive(false); }
