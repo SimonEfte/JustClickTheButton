@@ -33,7 +33,7 @@ public class BigPiercingBullet : MonoBehaviour
             }
         }
 
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
     }
 
 
@@ -45,7 +45,7 @@ public class BigPiercingBullet : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
         }
         #endregion
 
@@ -55,7 +55,7 @@ public class BigPiercingBullet : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
         }
         #endregion
     }

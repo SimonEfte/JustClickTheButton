@@ -559,7 +559,7 @@ public class ShootingEnemyMovement : MonoBehaviour
         if (isStunned == false)
         {
             Vector2 direction = moveRight ? Vector2.right : Vector2.left;
-            rb.velocity = direction * moveSpeed;
+            rb.linearVelocity = direction * moveSpeed;
         }
     }
 
@@ -581,7 +581,7 @@ public class ShootingEnemyMovement : MonoBehaviour
         if (isStunned == false)
         {
             Vector2 direction = moveRight ? Vector2.left : Vector2.right;
-            rb.velocity = direction * moveSpeed;
+            rb.linearVelocity = direction * moveSpeed;
         }
     }
 
@@ -603,7 +603,7 @@ public class ShootingEnemyMovement : MonoBehaviour
         if (isStunned == false)
         {
             Vector2 direction = moveUp ? Vector2.up : Vector2.down;
-            rb.velocity = direction * moveSpeed;
+            rb.linearVelocity = direction * moveSpeed;
         }
     }
 
@@ -624,7 +624,7 @@ public class ShootingEnemyMovement : MonoBehaviour
         if (isStunned == false)
         {
             Vector2 direction = moveUp ? Vector2.down : Vector2.up;
-            rb.velocity = direction * moveSpeed;
+            rb.linearVelocity = direction * moveSpeed;
         }
     }
     #endregion

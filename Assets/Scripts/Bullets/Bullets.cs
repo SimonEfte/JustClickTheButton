@@ -50,7 +50,7 @@ public class Bullets : MonoBehaviour
 
     public void Update()
     {
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
 
         if (Choises.bossChosenSetStuffInactive == true || Choises.playerDied || Choises.isInWinScreen == true)
         {
@@ -299,7 +299,7 @@ public class Bullets : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
         }
         #endregion
 
@@ -309,7 +309,7 @@ public class Bullets : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
         }
         #endregion
 
@@ -319,7 +319,7 @@ public class Bullets : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
 
             childTransform.gameObject.SetActive(true);
 

@@ -53,7 +53,7 @@ public class Pong : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = playerMove * movementSpeed;
+        rb.linearVelocity = playerMove * movementSpeed;
     }
 
 }

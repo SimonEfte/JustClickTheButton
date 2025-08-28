@@ -48,7 +48,7 @@ public class HomingBullets : MonoBehaviour
             }
         }
 
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -116,7 +116,7 @@ public class HomingBullets : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
         }
         #endregion
 
@@ -126,7 +126,7 @@ public class HomingBullets : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
         }
         #endregion
 
@@ -136,7 +136,7 @@ public class HomingBullets : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
 
             childTransform.gameObject.SetActive(true);
 

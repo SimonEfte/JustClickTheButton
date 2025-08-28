@@ -12,13 +12,13 @@ public class PongButton : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(Vector2.left * 600, ForceMode2D.Impulse);
-        lastVelocity = rb.velocity; // Initialize lastVelocity here
+        lastVelocity = rb.linearVelocity; // Initialize lastVelocity here
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
     }
 
     #region Button bounce on ARENA
@@ -32,7 +32,7 @@ public class PongButton : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0f);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0f);
         }
         #endregion
     }

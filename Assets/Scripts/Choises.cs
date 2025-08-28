@@ -459,7 +459,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         //knifeTotalCount = 15;
         SetGunVolume();
         waitBool = true;
-        //ButtonClick.level = 74;
+        //ButtonClick.level = 70;
     }
 
     #region Death Anim, Restart and Main menu
@@ -2603,10 +2603,17 @@ public class Choises : MonoBehaviour, IDataPersistence
     public int fadeSounds;
     IEnumerator FadeInAbilitites(GameObject ability)
     {
+        choiseYPos = 900;
+
+        if (choisesChosen == 1) { ability.transform.localPosition = new Vector2(choise1Xpos, choiseYPos); }
+        if (choisesChosen == 2) { ability.transform.localPosition = new Vector2(choise2Xpos, choiseYPos); }
+        if (choisesChosen == 3) { ability.transform.localPosition = new Vector2(choise3Xpos, choiseYPos); }
+        if (choisesChosen == 4) { ability.transform.localPosition = new Vector2(choise4Xpos, choiseYPos); }
+        if (choisesChosen == 5) { ability.transform.localPosition = new Vector2(choise5Xpos, choiseYPos); }
+
         //Debug.Log("Fade IN");
         ability.SetActive(true);
         SetAlpha(ability.GetComponent<Image>(), 1f);
-
         
         if (chose_Gun1 == false) { if (ability.gameObject.name == "Choise_Pistol_Uncommon") { SetRandomEnemyText(ability, 1);  } }
         if(choseShootSmallBullets == false) { if (ability.gameObject.name == "Choise_Chaotic_Uncommon") { SetRandomEnemyText(ability, 2);  }  }
@@ -2701,7 +2708,6 @@ public class Choises : MonoBehaviour, IDataPersistence
         if (ability.gameObject.name == "Choise_ControllButton_Mythic") { localizationScript.MovementText(); }
 
         allAbiliitesSpawnedIn = true;
-        choiseYPos = 900;
 
         if(choisesChosen == 1) { abilitesToReroll[0] = ability; }
         if (choisesChosen == 2) { abilitesToReroll[1] = ability; }
@@ -2948,7 +2954,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             int randomCommon1 = Random.Range(0, activeCommonAbilities.Length - commonAbilitesNotAviable);
             //Debug.Log(randomCommon1);
-            activeCommonAbilities[randomCommon1].SetActive(true);
+            //activeCommonAbilities[randomCommon1].SetActive(true);
             chose1Common = randomCommon1;
             StartCoroutine(FadeInAbilitites(activeCommonAbilities[randomCommon1]));
         }
@@ -2963,7 +2969,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomCommon2 == chose1Common);
 
             //Debug.Log(randomCommon2);
-            activeCommonAbilities[randomCommon2].SetActive(true);
+            //activeCommonAbilities[randomCommon2].SetActive(true);
             chose2Common = randomCommon2;
             StartCoroutine(FadeInAbilitites(activeCommonAbilities[randomCommon2]));
         }
@@ -2978,7 +2984,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomCommon3 == chose1Common || randomCommon3 == chose2Common);
 
             //Debug.Log(randomCommon3);
-            activeCommonAbilities[randomCommon3].SetActive(true);
+            //activeCommonAbilities[randomCommon3].SetActive(true);
             chose3Common = randomCommon3;
             StartCoroutine(FadeInAbilitites(activeCommonAbilities[randomCommon3]));
         }
@@ -2993,7 +2999,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomCommon4 == chose1Common || randomCommon4 == chose2Common || randomCommon4 == chose3Common);
 
             //Debug.Log(randomCommon4);
-            activeCommonAbilities[randomCommon4].SetActive(true);
+            //activeCommonAbilities[randomCommon4].SetActive(true);
             chose4Common = randomCommon4;
             StartCoroutine(FadeInAbilitites(activeCommonAbilities[randomCommon4]));
         }
@@ -3008,7 +3014,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomCommon5 == chose1Common || randomCommon5 == chose2Common || randomCommon5 == chose3Common || randomCommon5 == chose4Common);
 
             //Debug.Log(randomCommon5);
-            activeCommonAbilities[randomCommon5].SetActive(true);
+            //activeCommonAbilities[randomCommon5].SetActive(true);
             StartCoroutine(FadeInAbilitites(activeCommonAbilities[randomCommon5]));
         }
         #endregion
@@ -3036,7 +3042,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             int randomUnCommon1 = Random.Range(0, activeUnCommonAbilities.Length - unCommonAbilitesNotAviable);
             //Debug.Log(randomUnCommon1);
-            activeUnCommonAbilities[randomUnCommon1].SetActive(true);
+            //activeUnCommonAbilities[randomUnCommon1].SetActive(true);
             chose1UnCommon = randomUnCommon1;
             StartCoroutine(FadeInAbilitites(activeUnCommonAbilities[randomUnCommon1]));
         }
@@ -3051,7 +3057,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomUnCommon2 == chose1UnCommon);
 
             //Debug.Log(randomUnCommon2);
-            activeUnCommonAbilities[randomUnCommon2].SetActive(true);
+            //  activeUnCommonAbilities[randomUnCommon2].SetActive(true);
             chose2UnCommon = randomUnCommon2;
             StartCoroutine(FadeInAbilitites(activeUnCommonAbilities[randomUnCommon2]));
         }
@@ -3066,7 +3072,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomUnCommon3 == chose1UnCommon || randomUnCommon3 == chose2UnCommon);
 
             //Debug.Log(randomUnCommon3);
-            activeUnCommonAbilities[randomUnCommon3].SetActive(true);
+            //  activeUnCommonAbilities[randomUnCommon3].SetActive(true);
             chose3UnCommon = randomUnCommon3;
             StartCoroutine(FadeInAbilitites(activeUnCommonAbilities[randomUnCommon3]));
         }
@@ -3081,7 +3087,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomUnCommon4 == chose1UnCommon || randomUnCommon4 == chose2UnCommon || randomUnCommon4 == chose3UnCommon);
 
             //Debug.Log(randomUnCommon4);
-            activeUnCommonAbilities[randomUnCommon4].SetActive(true);
+            //  activeUnCommonAbilities[randomUnCommon4].SetActive(true);
             chose4UnCommon = randomUnCommon4;
             StartCoroutine(FadeInAbilitites(activeUnCommonAbilities[randomUnCommon4]));
         }
@@ -3096,7 +3102,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomUnCommon5 == chose1UnCommon || randomUnCommon5 == chose2UnCommon || randomUnCommon5 == chose3UnCommon || randomUnCommon5 == chose4UnCommon);
 
             //Debug.Log(randomUnCommon5);
-            activeUnCommonAbilities[randomUnCommon5].SetActive(true);
+            //  activeUnCommonAbilities[randomUnCommon5].SetActive(true);
             StartCoroutine(FadeInAbilitites(activeUnCommonAbilities[randomUnCommon5]));
         }
         #endregion
@@ -3124,7 +3130,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             int randomRare1 = Random.Range(0, activeRareAbilities.Length - rareAbilitesNotAviable);
             //Debug.Log(randomRare1);
-            activeRareAbilities[randomRare1].SetActive(true);
+            //  activeRareAbilities[randomRare1].SetActive(true);
             chose1Rare = randomRare1;
             StartCoroutine(FadeInAbilitites(activeRareAbilities[randomRare1]));
         }
@@ -3139,7 +3145,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomRare2 == chose1Rare);
 
             //Debug.Log(randomRare2);
-            activeRareAbilities[randomRare2].SetActive(true);
+            //   activeRareAbilities[randomRare2].SetActive(true);
             chose2Rare = randomRare2;
             StartCoroutine(FadeInAbilitites(activeRareAbilities[randomRare2]));
         }
@@ -3154,7 +3160,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomRare3 == chose1Rare || randomRare3 == chose2Rare);
 
             //Debug.Log(randomRare3);
-            activeRareAbilities[randomRare3].SetActive(true);
+            // activeRareAbilities[randomRare3].SetActive(true);
             chose3Rare = randomRare3;
             StartCoroutine(FadeInAbilitites(activeRareAbilities[randomRare3]));
         }
@@ -3169,7 +3175,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomRare4 == chose1Rare || randomRare4 == chose2Rare || randomRare4 == chose3Rare);
 
             // Debug.Log(randomRare4);
-            activeRareAbilities[randomRare4].SetActive(true);
+            //activeRareAbilities[randomRare4].SetActive(true);
             chose4Rare = randomRare4;
             StartCoroutine(FadeInAbilitites(activeRareAbilities[randomRare4]));
         }
@@ -3184,7 +3190,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomRare5 == chose1Rare || randomRare5 == chose2Rare || randomRare5 == chose3Rare || randomRare5 == chose4Rare);
 
             //Debug.Log(randomRare5);
-            activeRareAbilities[randomRare5].SetActive(true);
+            //activeRareAbilities[randomRare5].SetActive(true);
             StartCoroutine(FadeInAbilitites(activeRareAbilities[randomRare5]));
         }
         #endregion
@@ -3211,7 +3217,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         {
             int randomLegendary1 = Random.Range(0, activeLegendaryAbilities.Length - legendaryAbilitiesNotAvailable);
             // Debug.Log(randomLegendary1);
-            activeLegendaryAbilities[randomLegendary1].SetActive(true);
+            //activeLegendaryAbilities[randomLegendary1].SetActive(true);
             chose1Legendary = randomLegendary1;
             StartCoroutine(FadeInAbilitites(activeLegendaryAbilities[randomLegendary1]));
         }
@@ -3226,7 +3232,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomLegendary2 == chose1Legendary);
 
             // Debug.Log(randomLegendary2);
-            activeLegendaryAbilities[randomLegendary2].SetActive(true);
+            //activeLegendaryAbilities[randomLegendary2].SetActive(true);
             chose2Legendary = randomLegendary2;
             StartCoroutine(FadeInAbilitites(activeLegendaryAbilities[randomLegendary2]));
         }
@@ -3241,7 +3247,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomLegendary3 == chose1Legendary || randomLegendary3 == chose2Legendary);
 
             // Debug.Log(randomLegendary3);
-            activeLegendaryAbilities[randomLegendary3].SetActive(true);
+            //activeLegendaryAbilities[randomLegendary3].SetActive(true);
             chose3Legendary = randomLegendary3;
             StartCoroutine(FadeInAbilitites(activeLegendaryAbilities[randomLegendary3]));
         }
@@ -3256,7 +3262,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomLegendary4 == chose1Legendary || randomLegendary4 == chose2Legendary || randomLegendary4 == chose3Legendary);
 
             //Debug.Log(randomLegendary4);
-            activeLegendaryAbilities[randomLegendary4].SetActive(true);
+            //activeLegendaryAbilities[randomLegendary4].SetActive(true);
             chose4Legendary = randomLegendary4;
             StartCoroutine(FadeInAbilitites(activeLegendaryAbilities[randomLegendary4]));
         }
@@ -3271,7 +3277,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             } while (randomLegendary5 == chose1Legendary || randomLegendary5 == chose2Legendary || randomLegendary5 == chose3Legendary || randomLegendary5 == chose4Legendary);
 
             //  Debug.Log(randomLegendary5);
-            activeLegendaryAbilities[randomLegendary5].SetActive(true);
+            //activeLegendaryAbilities[randomLegendary5].SetActive(true);
             StartCoroutine(FadeInAbilitites(activeLegendaryAbilities[randomLegendary5]));
         }
         #endregion
@@ -3307,25 +3313,25 @@ public class Choises : MonoBehaviour, IDataPersistence
             {
                 chose1Mythic = true;
 
-                if (choseDoubleTap == false) { doubleTap.SetActive(true); StartCoroutine(FadeInAbilitites(doubleTap)); }
+                if (choseDoubleTap == false) { StartCoroutine(FadeInAbilitites(doubleTap)); }
                 if (choseDoubleTap == true)
                 {
                     if (firstWeaponChosen == true)
                     {
                         if (choseBouncingBullets == true && chooseControllableButton == false) 
                         { 
-                            controlledButton.SetActive(true); StartCoroutine(FadeInAbilitites(controlledButton)); 
+                            StartCoroutine(FadeInAbilitites(controlledButton)); 
                         }
                         else
                         {
                             int random3 = Random.Range(1, 3);
-                            if (random3 == 1) { pauseTime.SetActive(true); StartCoroutine(FadeInAbilitites(pauseTime)); }
-                            if (random3 == 2) { skullHarvest.SetActive(true); StartCoroutine(FadeInAbilitites(skullHarvest)); }
+                            if (random3 == 1) { StartCoroutine(FadeInAbilitites(pauseTime)); }
+                            if (random3 == 2) { StartCoroutine(FadeInAbilitites(skullHarvest)); }
                         }
                     }
                     else
                     {
-                        unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower));
+                       StartCoroutine(FadeInAbilitites(unlimitedPower));
                     }
                 }
             }
@@ -3336,7 +3342,7 @@ public class Choises : MonoBehaviour, IDataPersistence
         if (RandomMythic == 2) 
         {
             if (chose2Mythic == true) { RandomMythic = 3; }
-            else { chose2Mythic = true; unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower)); }
+            else { chose2Mythic = true; StartCoroutine(FadeInAbilitites(unlimitedPower)); }
         }
         #endregion
 
@@ -3348,7 +3354,7 @@ public class Choises : MonoBehaviour, IDataPersistence
             {
                 chose3Mythic = true;
 
-                if (choseBouncingBullets == true && chooseControllableButton == false) { controlledButton.SetActive(true); StartCoroutine(FadeInAbilitites(controlledButton)); }
+                if (choseBouncingBullets == true && chooseControllableButton == false) {  StartCoroutine(FadeInAbilitites(controlledButton)); }
 
                 if (choseBouncingBullets == false)
                 {
@@ -3357,13 +3363,13 @@ public class Choises : MonoBehaviour, IDataPersistence
                         int random3 = Random.Range(1, 3);
                         if (random3 == 1) 
                         {
-                            if (chose4Mythic == true) { skullHarvest.SetActive(true); StartCoroutine(FadeInAbilitites(skullHarvest)); }
-                            else { pauseTime.SetActive(true); StartCoroutine(FadeInAbilitites(pauseTime)); }
+                            if (chose4Mythic == true) {  StartCoroutine(FadeInAbilitites(skullHarvest)); }
+                            else { StartCoroutine(FadeInAbilitites(pauseTime)); }
                         }
                         if (random3 == 2) 
                         { 
                             if(chose5Mythic == true) { StartCoroutine(FadeInAbilitites(pauseTime)); }
-                            else { skullHarvest.SetActive(true); StartCoroutine(FadeInAbilitites(skullHarvest)); }
+                            else {  StartCoroutine(FadeInAbilitites(skullHarvest)); }
                         }
                     }
                     if (firstWeaponChosen == false)
@@ -3371,12 +3377,12 @@ public class Choises : MonoBehaviour, IDataPersistence
                         if (choseDoubleTap == false)
                         {
                             int random4 = Random.Range(1, 3);
-                            if (random4 == 1) { unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower)); }
-                            if (random4 == 2) { doubleTap.SetActive(true); StartCoroutine(FadeInAbilitites(doubleTap)); }
+                            if (random4 == 1) {  StartCoroutine(FadeInAbilitites(unlimitedPower)); }
+                            if (random4 == 2) { StartCoroutine(FadeInAbilitites(doubleTap)); }
                         }
                         else
                         {
-                            unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower));
+                          StartCoroutine(FadeInAbilitites(unlimitedPower));
                         }
                     }
                 }
@@ -3398,18 +3404,18 @@ public class Choises : MonoBehaviour, IDataPersistence
             {
                 chose4Mythic = true;
 
-                if (firstWeaponChosen == true) { pauseTime.SetActive(true); StartCoroutine(FadeInAbilitites(pauseTime)); }
+                if (firstWeaponChosen == true) {  StartCoroutine(FadeInAbilitites(pauseTime)); }
                 else
                 {
                     if (choseDoubleTap == false)
                     {
                         int random4 = Random.Range(1, 3);
-                        if (random4 == 1) { unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower)); }
-                        if (random4 == 2) { doubleTap.SetActive(true); StartCoroutine(FadeInAbilitites(doubleTap)); }
+                        if (random4 == 1) {  StartCoroutine(FadeInAbilitites(unlimitedPower)); }
+                        if (random4 == 2) {  StartCoroutine(FadeInAbilitites(doubleTap)); }
                     }
                     else
                     {
-                        unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower));
+                         StartCoroutine(FadeInAbilitites(unlimitedPower));
                     }
                 }
             }
@@ -3419,22 +3425,22 @@ public class Choises : MonoBehaviour, IDataPersistence
         #region Random = 5 | Skull Harvest
         if (RandomMythic == 5) 
         {
-            if (chose5Mythic == true) { pauseTime.SetActive(true); StartCoroutine(FadeInAbilitites(pauseTime)); }
+            if (chose5Mythic == true) { StartCoroutine(FadeInAbilitites(pauseTime)); }
             else
             {
                 chose5Mythic = true;
-                if (firstWeaponChosen == true) { skullHarvest.SetActive(true); StartCoroutine(FadeInAbilitites(skullHarvest)); }
+                if (firstWeaponChosen == true) { StartCoroutine(FadeInAbilitites(skullHarvest)); }
                 else
                 {
                     if (choseDoubleTap == false)
                     {
                         int random4 = Random.Range(1, 3);
-                        if (random4 == 1) { unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower)); }
-                        if (random4 == 2) { doubleTap.SetActive(true); StartCoroutine(FadeInAbilitites(doubleTap)); }
+                        if (random4 == 1) { StartCoroutine(FadeInAbilitites(unlimitedPower)); }
+                        if (random4 == 2) { StartCoroutine(FadeInAbilitites(doubleTap)); }
                     }
                     else
                     {
-                        unlimitedPower.SetActive(true); StartCoroutine(FadeInAbilitites(unlimitedPower));
+                        StartCoroutine(FadeInAbilitites(unlimitedPower));
                     }
                 }
             }

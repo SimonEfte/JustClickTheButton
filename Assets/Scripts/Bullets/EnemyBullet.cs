@@ -52,7 +52,7 @@ public class EnemyBullet : MonoBehaviour
             }
         }
 
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
         if (isBossBullet == true && BossMechanics.doneCharging == false)
         {
             Vector2 bossPosition = boss.transform.position;
@@ -121,7 +121,7 @@ public class EnemyBullet : MonoBehaviour
 
             directionToButton.Normalize();
 
-            rb.velocity = directionToButton * bulletSpeed;
+            rb.linearVelocity = directionToButton * bulletSpeed;
 
             if (gameObject.transform.localScale.x < 0.4f)
             {
@@ -164,7 +164,7 @@ public class EnemyBullet : MonoBehaviour
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
 
             childTransform.gameObject.SetActive(true);
 
@@ -304,7 +304,7 @@ public class EnemyBullet : MonoBehaviour
                 var speed = lastVelocity.magnitude;
                 var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-                rb.velocity = direction * Mathf.Max(speed, 0);
+                rb.linearVelocity = direction * Mathf.Max(speed, 0);
             }
         }
         #endregion
@@ -317,7 +317,7 @@ public class EnemyBullet : MonoBehaviour
                 var speed = lastVelocity.magnitude;
                 var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-                rb.velocity = direction * Mathf.Max(speed, 0);
+                rb.linearVelocity = direction * Mathf.Max(speed, 0);
             }
         }
         #endregion

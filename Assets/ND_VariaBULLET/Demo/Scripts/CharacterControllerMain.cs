@@ -56,7 +56,7 @@ namespace ND_VariaBULLET.Demo
             if (auto)
                 rb.MovePosition(lerp());
             else
-                rb.velocity = inputDir;
+                rb.linearVelocity = inputDir;
         }
 
         private Vector3 input()

@@ -40,7 +40,7 @@ public class DangerButtonMovement : MonoBehaviour
         // Convert the angle to a direction vector
         Vector2 direction = new Vector2(Mathf.Cos(targetAngle * Mathf.Deg2Rad), Mathf.Sin(targetAngle * Mathf.Deg2Rad));
 
-        rb.velocity = direction * speed;
+        rb.linearVelocity = direction * speed;
         yield return new WaitForSeconds(1f);
         StartCoroutine(IncreaseSize());
     }
@@ -147,7 +147,7 @@ public class DangerButtonMovement : MonoBehaviour
     public bool dangerButtonDeath;
     public void Update()
     {
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
 
         if (Choises.didPlayerDie == true && dangerButtonDeath == false)
         {
@@ -192,7 +192,7 @@ public class DangerButtonMovement : MonoBehaviour
 
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            rb.velocity = direction * Mathf.Max(speed, 0);
+            rb.linearVelocity = direction * Mathf.Max(speed, 0);
             //Debug.Log(rb.velocity);
         }
 
@@ -223,7 +223,7 @@ public class DangerButtonMovement : MonoBehaviour
             Vector2 direction = Quaternion.Euler(0, 0, angle) * Vector2.up; // Convert angle to direction
 
             Rigidbody2D rb = enemybullet.GetComponent<Rigidbody2D>();
-            rb.velocity = direction * 75f;
+            rb.linearVelocity = direction * 75f;
             yield return new WaitForSeconds(0);
         }
     }

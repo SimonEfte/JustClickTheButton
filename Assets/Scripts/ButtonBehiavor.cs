@@ -137,13 +137,13 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             }
             #endregion
 
-            if (Mathf.Approximately(buttonRB.velocity.magnitude, 0f))
+            if (Mathf.Approximately(buttonRB.linearVelocity.magnitude, 0f))
             {
                 ButtonClick.buttonMovingDamageBonus = 0;
             }
             else
             {
-                ButtonClick.buttonMovingDamageBonus = buttonRB.velocity.magnitude;
+                ButtonClick.buttonMovingDamageBonus = buttonRB.linearVelocity.magnitude;
                 //Debug.Log(ButtonClick.buttonMovingDamageBonus);
             }
 
@@ -347,7 +347,7 @@ public class ButtonBehiavor : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             Vector2 direction = Quaternion.Euler(0, 0, angle) * Vector2.up; // Convert angle to direction
 
             Rigidbody2D rb = chargedBullet.GetComponent<Rigidbody2D>();
-            rb.velocity = direction * bulletSpeed;
+            rb.linearVelocity = direction * bulletSpeed;
         }
 
         yield return new WaitForSeconds(0); // Adjust delay between each bullet

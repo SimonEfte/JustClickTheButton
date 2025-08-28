@@ -248,7 +248,7 @@ public class SmallEnemyMovement : MonoBehaviour
     private void ChangeDirection()
     {
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        rb.velocity = randomDirection * moveSpeedNotAttacking;
+        rb.linearVelocity = randomDirection * moveSpeedNotAttacking;
     }
     #endregion
 
@@ -369,7 +369,7 @@ public class SmallEnemyMovement : MonoBehaviour
         {
             offScreen = true;
             Vector2 moveDirection = -rb.position.normalized;
-            rb.velocity = moveDirection * moveSpeedNotAttacking;
+            rb.linearVelocity = moveDirection * moveSpeedNotAttacking;
         }
 
         if(Vector3.Distance(transform.position, mainButton.position) > 0.25f)

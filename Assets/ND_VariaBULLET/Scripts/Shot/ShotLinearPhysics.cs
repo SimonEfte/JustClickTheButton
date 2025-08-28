@@ -22,7 +22,7 @@ namespace ND_VariaBULLET
 
         private void setVelocity(float speed)
         {
-            body.velocity = new Vector2(
+            body.linearVelocity = new Vector2(
                 speed * Trajectory.x,
                 speed * Trajectory.y
             );

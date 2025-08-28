@@ -270,7 +270,7 @@ public class Arrow : MonoBehaviour
                         }
                     }
 
-                    rigidbodyArrow.velocity = Vector2.zero;
+                    rigidbodyArrow.linearVelocity = Vector2.zero;
                     rigidbodyArrow.simulated = false;
                 }
 

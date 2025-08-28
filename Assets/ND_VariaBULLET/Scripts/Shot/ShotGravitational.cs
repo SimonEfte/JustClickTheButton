@@ -41,7 +41,7 @@ namespace ND_VariaBULLET
             if (rotationSpeed + rotationSpeedRange > 0)
                 Utilities.Warn("WARNING: Rotation Greater Than 0 May Conflict with CenterMassPivot", this.gameObject.name);
 
-            transform.rotation = CalcObject.VectorToRotationSlerp(transform.rotation, body.velocity, PivotRotationSpeed);
+            transform.rotation = CalcObject.VectorToRotationSlerp(transform.rotation, body.linearVelocity, PivotRotationSpeed);
         }
     }
 }

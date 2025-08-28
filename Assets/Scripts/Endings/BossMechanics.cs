@@ -484,7 +484,7 @@ public class BossMechanics : MonoBehaviour
                 // Apply velocity to the bullet
                 float bulletSpeed = 100;
                 doneCharging = true;
-                bullet.GetComponent<Rigidbody2D>().velocity = bulletDirection * bulletSpeed;
+                bullet.GetComponent<Rigidbody2D>().linearVelocity = bulletDirection * bulletSpeed;
                 //bullet.transform.SetParent(mainBulletParent);
             }
 
@@ -567,7 +567,7 @@ public class BossMechanics : MonoBehaviour
         //enemyBullet.transform.SetParent(mainBulletParent);
         Vector3 directionToButton = mainButton.position - transform.position;
         directionToButton.Normalize();
-        enemyBullet.GetComponent<Rigidbody2D>().velocity = directionToButton * bulletSpeed;
+        enemyBullet.GetComponent<Rigidbody2D>().linearVelocity = directionToButton * bulletSpeed;
     }
 
     #endregion

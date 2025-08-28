@@ -498,7 +498,7 @@ public class Champion2Movement : MonoBehaviour
             {
                 crossbowArrow.transform.position = crossbow1StartingPos.transform.position;
                 Vector3 normalizedDirection = crossbow1Dir.normalized;
-                rb.velocity = normalizedDirection * crossbowSpeed;
+                rb.linearVelocity = normalizedDirection * crossbowSpeed;
                 float arrowRotation = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
                 crossbowArrow.transform.rotation = Quaternion.Euler(0, 0, arrowRotation);
             }
@@ -506,7 +506,7 @@ public class Champion2Movement : MonoBehaviour
             {
                 crossbowArrow.transform.position = crossbow2StartingPos.transform.position;
                 Vector3 normalizedDirection = crossbow2Dir.normalized;
-                rb.velocity = normalizedDirection * crossbowSpeed;
+                rb.linearVelocity = normalizedDirection * crossbowSpeed;
                 float arrowRotation = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
                 crossbowArrow.transform.rotation = Quaternion.Euler(0, 0, arrowRotation);
             }
@@ -514,7 +514,7 @@ public class Champion2Movement : MonoBehaviour
             {
                 crossbowArrow.transform.position = crossbow3StartingPos.transform.position;
                 Vector3 normalizedDirection = crossbow3Dir.normalized;
-                rb.velocity = normalizedDirection * crossbowSpeed;
+                rb.linearVelocity = normalizedDirection * crossbowSpeed;
                 float arrowRotation = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
                 crossbowArrow.transform.rotation = Quaternion.Euler(0, 0, arrowRotation);
             }
@@ -522,7 +522,7 @@ public class Champion2Movement : MonoBehaviour
             {
                 crossbowArrow.transform.position = crossbow4StartingPos.transform.position;
                 Vector3 normalizedDirection = crossbow4Dir.normalized;
-                rb.velocity = normalizedDirection * crossbowSpeed;
+                rb.linearVelocity = normalizedDirection * crossbowSpeed;
                 float arrowRotation = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
                 crossbowArrow.transform.rotation = Quaternion.Euler(0, 0, arrowRotation);
             }

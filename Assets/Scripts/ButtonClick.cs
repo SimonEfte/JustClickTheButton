@@ -1049,7 +1049,7 @@ public class ButtonClick : MonoBehaviour, IDataPersistence
 
         Rigidbody2D rb = smallBullet.GetComponent<Rigidbody2D>();
 
-        rb.velocity = randomDirection * Choises.smallBulletSpeed;
+        rb.linearVelocity = randomDirection * Choises.smallBulletSpeed;
 
         yield return new WaitForSeconds(Choises.smallBulletDeSpawnTime);
 
@@ -1345,7 +1345,7 @@ public class ButtonClick : MonoBehaviour, IDataPersistence
                 float angle = i * angleIncrement;
                 Vector2 direction = Quaternion.Euler(0, 0, angle) * Vector2.up; // Convert angle to direction
 
-                rb.velocity = direction * arrowSpeed;
+                rb.linearVelocity = direction * arrowSpeed;
 
                 // Set individual rotation for each arrow
                 float arrowRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

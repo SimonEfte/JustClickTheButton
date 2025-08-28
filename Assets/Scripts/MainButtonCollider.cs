@@ -96,11 +96,11 @@ public class MainButtonCollider : MonoBehaviour
 
         buttonLeftClickBlock.transform.localPosition = gameObject.transform.localPosition;
 
-        lastVelocity = buttonRB.velocity;
+        lastVelocity = buttonRB.linearVelocity;
 
         if(ButtonClick.isButtonMoving == true)
         {
-            currentSpeed = buttonRB.velocity.magnitude;
+            currentSpeed = buttonRB.linearVelocity.magnitude;
             ButtonClick.buttonMovingDamageBonus = currentSpeed;
         }
 
@@ -547,9 +547,9 @@ public class MainButtonCollider : MonoBehaviour
                 Vector2 leftDirection = Quaternion.Euler(0, 0, -11) * trippleShotDirection;
                 Vector2 rightDirection = Quaternion.Euler(0, 0, 11) * trippleShotDirection;
 
-                rb1.velocity = middleDirection.normalized * Choises.trippleShotSpeed;
-                rb2.velocity = leftDirection.normalized * Choises.trippleShotSpeed;
-                rb3.velocity = rightDirection.normalized * Choises.trippleShotSpeed;
+                rb1.linearVelocity = middleDirection.normalized * Choises.trippleShotSpeed;
+                rb2.linearVelocity = leftDirection.normalized * Choises.trippleShotSpeed;
+                rb3.linearVelocity = rightDirection.normalized * Choises.trippleShotSpeed;
 
                 float rotationMiddle = Mathf.Atan2(trippleShotDirection.y, trippleShotDirection.x) * Mathf.Rad2Deg;
                 tripple1.transform.rotation = Quaternion.Euler(0, 0, rotationMiddle);
@@ -616,7 +616,7 @@ public class MainButtonCollider : MonoBehaviour
                 homingBullet.transform.position = homingBulletPos.transform.position;
 
                 Rigidbody2D rb = homingBullet.GetComponent<Rigidbody2D>();
-                rb.velocity = awpDirection * Choises.homignBulletSpeed;
+                rb.linearVelocity = awpDirection * Choises.homignBulletSpeed;
 
                 StartCoroutine(ShootHomingBullet(homingBullet));
             }
@@ -1097,7 +1097,7 @@ public class MainButtonCollider : MonoBehaviour
         gunBullet.transform.position = gunBulletPos.transform.position;
         Rigidbody2D rb = gunBullet.GetComponent<Rigidbody2D>();
 
-        rb.velocity = gun1Direction * Choises.bulletGun1_Speed;
+        rb.linearVelocity = gun1Direction * Choises.bulletGun1_Speed;
 
         StartCoroutine(GunBullet(gunBullet));
     }
@@ -1149,7 +1149,7 @@ public class MainButtonCollider : MonoBehaviour
             float randomAngle = Random.Range(-12, 12); // Adjust spreadAngleRange to control randomness
             Vector2 randomDirection = Quaternion.Euler(0, 0, randomAngle) * gun2Direction;
 
-            rb.velocity = randomDirection.normalized * randomSpeed;
+            rb.linearVelocity = randomDirection.normalized * randomSpeed;
 
             int random = Random.Range(1, 3);
             if (random == 1) { audioManager.Play("Shotgun1"); }
@@ -1210,7 +1210,7 @@ public class MainButtonCollider : MonoBehaviour
         gunBullet.transform.position = mp4BulletStartingPos.transform.position;
 
         Rigidbody2D rb = gunBullet.GetComponent<Rigidbody2D>();
-        rb.velocity = gun3Direction * Choises.mp4Speed;
+        rb.linearVelocity = gun3Direction * Choises.mp4Speed;
 
         StartCoroutine(Mp4Bullet(gunBullet));
     }
@@ -1265,7 +1265,7 @@ public class MainButtonCollider : MonoBehaviour
         crossbowArrow.transform.position = crossbowStartingPos.transform.position;
         rb.simulated = true;
 
-        rb.velocity = gun4Direction * Choises.crossbowSpeed;
+        rb.linearVelocity = gun4Direction * Choises.crossbowSpeed;
         float arrowRotation = Mathf.Atan2(gun4Direction.y, gun4Direction.x) * Mathf.Rad2Deg;
         crossbowArrow.transform.rotation = Quaternion.Euler(0, 0, arrowRotation);
 
@@ -1289,10 +1289,10 @@ public class MainButtonCollider : MonoBehaviour
             var speed = lastVelocity.magnitude / 3;
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
-            buttonRB.velocity = direction * Mathf.Max(speed, 0);
+            buttonRB.linearVelocity = direction * Mathf.Max(speed, 0);
         }
 
-        lastVelocity = buttonRB.velocity;
+        lastVelocity = buttonRB.linearVelocity;
     }
     #endregion
 
@@ -1310,7 +1310,7 @@ public class MainButtonCollider : MonoBehaviour
         bigPiecringBullet.transform.position = bigPiercingPos.transform.position;
         Rigidbody2D rb = bigPiecringBullet.GetComponent<Rigidbody2D>();
 
-        rb.velocity = gun3Direction * Choises.bigBulletSpeed;
+        rb.linearVelocity = gun3Direction * Choises.bigBulletSpeed;
 
         yield return new WaitForSeconds(Choises.bigBulletLastTime);
 

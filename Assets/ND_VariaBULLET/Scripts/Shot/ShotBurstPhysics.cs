@@ -25,7 +25,7 @@ namespace ND_VariaBULLET
         {
             timer = new Timer(0);
             body = GetComponent<Rigidbody2D>();
-            body.velocity = new Vector2(ShotSpeed * InitialBurst * Trajectory.x, ShotSpeed * InitialBurst * Trajectory.y);
+            body.linearVelocity = new Vector2(ShotSpeed * InitialBurst * Trajectory.x, ShotSpeed * InitialBurst * Trajectory.y);
         }
 
         public override void Update()

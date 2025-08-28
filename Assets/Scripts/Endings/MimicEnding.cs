@@ -142,7 +142,7 @@ public class MimicEnding : MonoBehaviour
 
             // Instantiate and shoot the sawBlade
             sawBlade.transform.position = startPosition;
-            sawBlade.GetComponent<Rigidbody2D>().velocity = shootDirection * sawBladeShootSpeed;
+            sawBlade.GetComponent<Rigidbody2D>().linearVelocity = shootDirection * sawBladeShootSpeed;
         }
     }
 
